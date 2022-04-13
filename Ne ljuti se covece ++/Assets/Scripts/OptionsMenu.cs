@@ -7,21 +7,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameController : MonoBehaviour
+public class OptionsMenu : MonoBehaviour
 {
-    public static GameController instance;
-
-    internal int lastScene = -1;
-    internal string playerColor = "";
-    internal string gameDifficulty = "";
-
-    void Awake()
-    {
-        instance = this;
-        
-        DontDestroyOnLoad(this.gameObject);
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -32,5 +19,12 @@ public class GameController : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void GoBack()
+    {
+        GameController.instance.playerColor = "";
+        GameController.instance.gameDifficulty = "";
+        SceneManager.LoadScene(GameController.instance.lastScene);
     }
 }

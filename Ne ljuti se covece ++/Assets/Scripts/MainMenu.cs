@@ -9,12 +9,17 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
+    void Awake()
+    {
+        GameController.instance.lastScene = SceneManager.GetActiveScene().buildIndex;
+    }
+
     public void NewGame()
     {
         SceneManager.LoadScene(1);
     }
 
-    public void OptionMenu()
+    public void OptionsMenu()
     {
         SceneManager.LoadScene(4);
     }
