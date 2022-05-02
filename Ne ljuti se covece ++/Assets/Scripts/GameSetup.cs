@@ -49,7 +49,51 @@ public class GameSetup : MonoBehaviour
 
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            this.GoBack();
+        }
+        else if (Input.GetKeyDown(KeyCode.O))
+        {
+            this.OptionsMenu();
+        }
+        else if (Input.GetKeyDown(KeyCode.H))
+        {
+            this.HelpMenu();
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+        {
+            if (GameController.instance.playerColor != "" && GameController.instance.gameDifficulty != "")
+                this.StartGame();
+        }
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            this.SetColor("red");
+        }
+        else if (Input.GetKeyDown(KeyCode.B))
+        {
+            this.SetColor("blue");
+        }
+        else if (Input.GetKeyDown(KeyCode.G))
+        {
+            this.SetColor("green");
+        }
+        else if (Input.GetKeyDown(KeyCode.Y))
+        {
+            this.SetColor("yellow");
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            this.SetDifficulty("easy");
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            this.SetDifficulty("medium");
+        }
+        else if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            this.SetDifficulty("hard");
+        }
     }
 
     internal void SetColor(string color)

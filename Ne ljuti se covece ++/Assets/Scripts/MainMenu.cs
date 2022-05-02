@@ -14,6 +14,26 @@ public class MainMenu : MonoBehaviour
         GameController.instance.lastScene = SceneManager.GetActiveScene().buildIndex;
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.N) || Input.GetKeyDown(KeyCode.Return))
+        {
+            this.NewGame();
+        }
+        else if (Input.GetKeyDown(KeyCode.O))
+        {
+            this.OptionsMenu();
+        }
+        else if (Input.GetKeyDown(KeyCode.H))
+        {
+            this.HelpMenu();
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            this.Exit();
+        }
+    }
+
     public void NewGame()
     {
         SceneManager.LoadScene(1);
