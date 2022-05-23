@@ -20,31 +20,44 @@ public class GameSetup : MonoBehaviour
 
     public Button startGameButton;
 
-    void Start()
+    private void SetButtonListeners()
     {
-        GameController.instance.lastScene = SceneManager.GetActiveScene().buildIndex;
-
         redColorButton.onClick.RemoveAllListeners();
         blueColorButton.onClick.RemoveAllListeners();
         greenColorButton.onClick.RemoveAllListeners();
         yellowColorButton.onClick.RemoveAllListeners();
 
         redColorButton.onClick.AddListener(delegate { SetColor("red"); });
+        redColorButton.onClick.AddListener(AudioManager.instance.PlayButtonPressedSound);
         blueColorButton.onClick.AddListener(delegate { SetColor("blue"); });
+        blueColorButton.onClick.AddListener(AudioManager.instance.PlayButtonPressedSound);
         greenColorButton.onClick.AddListener(delegate { SetColor("green"); });
+        greenColorButton.onClick.AddListener(AudioManager.instance.PlayButtonPressedSound);
         yellowColorButton.onClick.AddListener(delegate { SetColor("yellow"); });
+        yellowColorButton.onClick.AddListener(AudioManager.instance.PlayButtonPressedSound);
 
         easyDifficultyButton.onClick.RemoveAllListeners();
         mediumDifficultyButton.onClick.RemoveAllListeners();
         hardDifficultyButton.onClick.RemoveAllListeners();
 
         easyDifficultyButton.onClick.AddListener(delegate { SetDifficulty("easy"); });
+        easyDifficultyButton.onClick.AddListener(AudioManager.instance.PlayButtonPressedSound);
         mediumDifficultyButton.onClick.AddListener(delegate { SetDifficulty("medium"); });
+        mediumDifficultyButton.onClick.AddListener(AudioManager.instance.PlayButtonPressedSound);
         hardDifficultyButton.onClick.AddListener(delegate { SetDifficulty("hard"); });
+        hardDifficultyButton.onClick.AddListener(AudioManager.instance.PlayButtonPressedSound);
 
         startGameButton.interactable = false;
         startGameButton.onClick.RemoveAllListeners();
         startGameButton.onClick.AddListener(StartGame);
+        startGameButton.onClick.AddListener(AudioManager.instance.PlayButtonPressedSound);
+    }
+
+    void Start()
+    {
+        GameController.instance.lastScene = SceneManager.GetActiveScene().buildIndex;
+
+        this.SetButtonListeners();
     }
 
     void Update()
@@ -119,6 +132,7 @@ public class GameSetup : MonoBehaviour
 
     public void GoBack()
     {
+        AudioManager.instance.PlayButtonPressedSound();
         GameController.instance.playerColor = "";
         GameController.instance.gameDifficulty = "";
         SceneManager.LoadScene(0);
@@ -126,11 +140,13 @@ public class GameSetup : MonoBehaviour
 
     public void OptionsMenu()
     {
+        AudioManager.instance.PlayButtonPressedSound();
         SceneManager.LoadScene(4);
     }
 
     public void HelpMenu()
     {
+        AudioManager.instance.PlayButtonPressedSound();
         SceneManager.LoadScene(5);
     }
 }
