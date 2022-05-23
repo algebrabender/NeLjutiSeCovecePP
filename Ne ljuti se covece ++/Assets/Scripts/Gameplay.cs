@@ -139,8 +139,10 @@ public class Gameplay : MonoBehaviour
         {
             if (!GameController.instance.AIPawns[pawnNumber + (i * 4)].Out && rolledNumber == 6)
             {
+
                 historyText.text += "Kockica je pala na: " + rolledNumber + "\n";
                 historyText.text += "Pawn number: " + pawnNumber + " i: " + i + " index: " + (pawnNumber + (i * 4)) + "\n";
+                historyText.text += "----------------------------------------\n";
 
                 float newX;
                 float newY;
@@ -159,15 +161,43 @@ public class Gameplay : MonoBehaviour
                     newX = 584.21f;
                     newY = 285.94f;
                 }
-                AIPawns[pawnNumber + (i * 4)].transform.position = new Vector3(newX, newY, AIPawns[pawnNumber + (i * 4)].transform.position.z);
-                GameController.instance.AIPawns[pawnNumber + (i * 4)].OutedPawn(newX, newY);
+
+                bool thereIsOuted = false;
+                for (int j = i * 4; j < i * 4 + 4; j++)
+                {
+                    if (j == pawnNumber + (i * 4))
+                        continue;
+                    if ((float)System.Math.Round(GameController.instance.AIPawns[j].Position.x, 2) == newX
+                        && (float)System.Math.Round(GameController.instance.AIPawns[j].Position.y, 2) == newY)
+                    {
+                        thereIsOuted = true;
+                        break;
+                    }
+                }
+
+                if (!thereIsOuted)
+                {
+                    AIPawns[pawnNumber + (i * 4)].transform.position = new Vector3(newX, newY, AIPawns[pawnNumber + (i * 4)].transform.position.z);
+                    GameController.instance.AIPawns[pawnNumber + (i * 4)].OutedPawn(newX, newY);
+
+                    pawnNumber = Random.Range(0, 4);
+                    rolledNumber = Random.Range(1, 7);
+                }
+                else
+                {
+                    pawnNumber = Random.Range(0, 4);
+                    rolledNumber = Random.Range(1, 7);
+                }
+
+                yield return new WaitForSeconds(2);
             }
-            else if (!GameController.instance.AIPawns[pawnNumber + (i * 4)].Eaten)
+            else if (!GameController.instance.AIPawns[pawnNumber + (i * 4)].Out && GameController.instance.AIPawns[pawnNumber + (i * 4)].Eaten)
             {
                 AudioManager.instance.PlayDiceRollSound();
 
                 historyText.text += "Kockica je pala na: " + rolledNumber + "\n";
                 historyText.text += "Pawn number: " + pawnNumber + " i: " + i + " index: " + (pawnNumber + (i * 4)) + "\n";
+                historyText.text += "----------------------------------------\n";
 
                 float deltaX = 40.27f * lastRolledValue;
                 float deltaY = 40.63f * lastRolledValue;
@@ -182,10 +212,15 @@ public class Gameplay : MonoBehaviour
             }
             else
             {
-                pawnNumber = Random.Range(0, 3);
-                i--;
+                historyText.text += "Turn skipped\n";
+                historyText.text += "----------------------------------------\n";
+                //pawnNumber = Random.Range(0, 3);
+                //rolledNumber = Random.Range(1, 7);
+                //i--;
             }
         }
+
+        //yield return new WaitForSeconds(2);
     }
 
     private void SetPawnNumbers()
@@ -298,10 +333,18 @@ public class Gameplay : MonoBehaviour
 
     public void PawnOne()
     {
-        if (!GameController.instance.controlledPawns[0].Out && lastRolledValue == 6)
+        if (!GameController.instance.controlledPawns[0].Out && lastRolledValue == 6
+            && (float)System.Math.Round(GameController.instance.controlledPawns[1].Position.x, 2) != 303.35f
+            && (float)System.Math.Round(GameController.instance.controlledPawns[1].Position.y, 2) != 83.87f
+            && (float)System.Math.Round(GameController.instance.controlledPawns[2].Position.x, 2) != 303.35f
+            && (float)System.Math.Round(GameController.instance.controlledPawns[2].Position.y, 2) != 83.87f
+            && (float)System.Math.Round(GameController.instance.controlledPawns[3].Position.x, 2) != 303.35f
+            && (float)System.Math.Round(GameController.instance.controlledPawns[3].Position.y, 2) != 83.87f)
         {
             pawnOne.transform.position = new Vector3(pawnOne.transform.position.x + 102.6f, pawnOne.transform.position.y - 19.54f, pawnOne.transform.position.z);
             GameController.instance.controlledPawns[0].OutedPawn(pawnOne.transform.position.x, pawnOne.transform.position.y);
+
+            this.DisableButtons();
         }
         else if (GameController.instance.controlledPawns[0].Out && !GameController.instance.controlledPawns[0].Eaten)
         {
@@ -319,7 +362,13 @@ public class Gameplay : MonoBehaviour
 
     public void PawnTwo()
     {
-        if (!GameController.instance.controlledPawns[1].Out && lastRolledValue == 6)
+        if (!GameController.instance.controlledPawns[1].Out && lastRolledValue == 6 
+            && (float)System.Math.Round(GameController.instance.controlledPawns[0].Position.x, 2) != 303.35f 
+            && (float)System.Math.Round(GameController.instance.controlledPawns[0].Position.y, 2) != 83.87f
+            && (float)System.Math.Round(GameController.instance.controlledPawns[2].Position.x, 2) != 303.35f
+            && (float)System.Math.Round(GameController.instance.controlledPawns[2].Position.y, 2) != 83.87f
+            && (float)System.Math.Round(GameController.instance.controlledPawns[3].Position.x, 2) != 303.35f
+            && (float)System.Math.Round(GameController.instance.controlledPawns[3].Position.y, 2) != 83.87f)
         {
             pawnTwo.transform.position = new Vector3(pawnTwo.transform.position.x + 174.73f, pawnTwo.transform.position.y - 19.54f, pawnTwo.transform.position.z);
             GameController.instance.controlledPawns[1].OutedPawn(pawnTwo.transform.position.x, pawnTwo.transform.position.y);
@@ -340,7 +389,13 @@ public class Gameplay : MonoBehaviour
 
     public void PawnThree()
     {
-        if (!GameController.instance.controlledPawns[2].Out && lastRolledValue == 6)
+        if (!GameController.instance.controlledPawns[2].Out && lastRolledValue == 6
+            && (float)System.Math.Round(GameController.instance.controlledPawns[0].Position.x, 2) != 303.35f
+            && (float)System.Math.Round(GameController.instance.controlledPawns[0].Position.y, 2) != 83.87f
+            && (float)System.Math.Round(GameController.instance.controlledPawns[1].Position.x, 2) != 303.35f
+            && (float)System.Math.Round(GameController.instance.controlledPawns[1].Position.y, 2) != 83.87f
+            && (float)System.Math.Round(GameController.instance.controlledPawns[3].Position.x, 2) != 303.35f
+            && (float)System.Math.Round(GameController.instance.controlledPawns[3].Position.y, 2) != 83.87f)
         {
             pawnThree.transform.position = new Vector3(pawnThree.transform.position.x + 174.73f, pawnThree.transform.position.y - 95.87f, pawnThree.transform.position.z);
             GameController.instance.controlledPawns[2].OutedPawn(pawnThree.transform.position.x, pawnThree.transform.position.y);
@@ -361,7 +416,13 @@ public class Gameplay : MonoBehaviour
 
     public void PawnFour()
     {
-        if (!GameController.instance.controlledPawns[3].Out && lastRolledValue == 6)
+        if (!GameController.instance.controlledPawns[3].Out && lastRolledValue == 6
+            && (float)System.Math.Round(GameController.instance.controlledPawns[0].Position.x, 2) != 303.35f
+            && (float)System.Math.Round(GameController.instance.controlledPawns[0].Position.y, 2) != 83.87f
+            && (float)System.Math.Round(GameController.instance.controlledPawns[1].Position.x, 2) != 303.35f
+            && (float)System.Math.Round(GameController.instance.controlledPawns[1].Position.y, 2) != 83.87f
+            && (float)System.Math.Round(GameController.instance.controlledPawns[2].Position.x, 2) != 303.35f
+            && (float)System.Math.Round(GameController.instance.controlledPawns[2].Position.y, 2) != 83.87f)
         {
             pawnFour.transform.position = new Vector3(pawnFour.transform.position.x + 102.6f, pawnFour.transform.position.y - 95.87f, pawnFour.transform.position.z);
             GameController.instance.controlledPawns[3].OutedPawn(pawnFour.transform.position.x, pawnFour.transform.position.y);
