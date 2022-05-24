@@ -816,6 +816,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 234119990}
+  - component: {fileID: 234119991}
   m_Layer: 5
   m_Name: AIUpperRightPawnThree
   m_TagString: Untagged
@@ -845,6 +846,19 @@ RectTransform:
   m_AnchoredPosition: {x: 238, y: 368.00006}
   m_SizeDelta: {x: 65, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!65 &234119991
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234119989}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 65, y: 65, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &280243078
 GameObject:
   m_ObjectHideFlags: 0
@@ -1313,6 +1327,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 437697322}
+  - component: {fileID: 437697323}
   m_Layer: 5
   m_Name: PlayerPawnFour
   m_TagString: Untagged
@@ -1342,6 +1357,19 @@ RectTransform:
   m_AnchoredPosition: {x: -238, y: -244}
   m_SizeDelta: {x: 65, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!65 &437697323
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437697321}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 65, y: 65, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &456861617
 GameObject:
   m_ObjectHideFlags: 0
@@ -1714,6 +1742,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 574118468}
+  - component: {fileID: 574118469}
   m_Layer: 5
   m_Name: AILowerRightPawnThree
   m_TagString: Untagged
@@ -1743,6 +1772,19 @@ RectTransform:
   m_AnchoredPosition: {x: 238.00002, y: -243.99997}
   m_SizeDelta: {x: 65, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!65 &574118469
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574118467}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 65, y: 65, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &602981791
 GameObject:
   m_ObjectHideFlags: 0
@@ -1872,6 +1914,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 649711466}
+  - component: {fileID: 649711467}
   m_Layer: 5
   m_Name: AIUpperRightPawnOne
   m_TagString: Untagged
@@ -1901,6 +1944,19 @@ RectTransform:
   m_AnchoredPosition: {x: 358.00006, y: 240.99998}
   m_SizeDelta: {x: 65, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!65 &649711467
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649711465}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 65, y: 65, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &723466309
 GameObject:
   m_ObjectHideFlags: 0
@@ -2424,6 +2480,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 831232324}
+  - component: {fileID: 831232325}
   m_Layer: 5
   m_Name: AIUpperLeftPawnFour
   m_TagString: Untagged
@@ -2453,6 +2510,19 @@ RectTransform:
   m_AnchoredPosition: {x: -238, y: 368.00006}
   m_SizeDelta: {x: 65, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!65 &831232325
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 831232323}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 65, y: 65, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &845042145
 GameObject:
   m_ObjectHideFlags: 0
@@ -2654,6 +2724,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 866124513}
+  - component: {fileID: 866124514}
   m_Layer: 5
   m_Name: AIUpperLeftPawnTwo
   m_TagString: Untagged
@@ -2683,6 +2754,19 @@ RectTransform:
   m_AnchoredPosition: {x: -358, y: 240.99998}
   m_SizeDelta: {x: 65, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!65 &866124514
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866124512}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 65, y: 65, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &915076012
 GameObject:
   m_ObjectHideFlags: 0
@@ -2848,6 +2932,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 950409824}
+  - component: {fileID: 950409825}
   m_Layer: 5
   m_Name: AIUpperRightPawnTwo
   m_TagString: Untagged
@@ -2877,6 +2962,19 @@ RectTransform:
   m_AnchoredPosition: {x: 238, y: 240.99998}
   m_SizeDelta: {x: 65, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!65 &950409825
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 950409823}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 65, y: 65, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &953634687
 GameObject:
   m_ObjectHideFlags: 0
@@ -3213,6 +3311,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1188817941}
+  - component: {fileID: 1188817942}
   m_Layer: 5
   m_Name: AIUpperRightPawnFour
   m_TagString: Untagged
@@ -3242,6 +3341,19 @@ RectTransform:
   m_AnchoredPosition: {x: 358, y: 368.00006}
   m_SizeDelta: {x: 65, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!65 &1188817942
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188817940}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 65, y: 65, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1206420111
 GameObject:
   m_ObjectHideFlags: 0
@@ -3422,6 +3534,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1228652651}
+  - component: {fileID: 1228652652}
   m_Layer: 5
   m_Name: PlayerPawnTwo
   m_TagString: Untagged
@@ -3451,6 +3564,19 @@ RectTransform:
   m_AnchoredPosition: {x: -358, y: -371}
   m_SizeDelta: {x: 65, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!65 &1228652652
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1228652650}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 65, y: 65, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1263085813
 GameObject:
   m_ObjectHideFlags: 0
@@ -4283,6 +4409,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1459186933}
+  - component: {fileID: 1459186934}
   m_Layer: 5
   m_Name: AIUpperLeftPawnThree
   m_TagString: Untagged
@@ -4312,6 +4439,19 @@ RectTransform:
   m_AnchoredPosition: {x: -358, y: 368.00006}
   m_SizeDelta: {x: 65, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!65 &1459186934
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459186932}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 65, y: 65, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1467731663
 GameObject:
   m_ObjectHideFlags: 0
@@ -4770,6 +4910,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1594049701}
+  - component: {fileID: 1594049702}
   m_Layer: 5
   m_Name: AILowerRightPawnOne
   m_TagString: Untagged
@@ -4799,6 +4940,19 @@ RectTransform:
   m_AnchoredPosition: {x: 358.00006, y: -371}
   m_SizeDelta: {x: 65, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!65 &1594049702
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594049700}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 65, y: 65, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1648606178
 GameObject:
   m_ObjectHideFlags: 0
@@ -5286,6 +5440,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1830837857}
+  - component: {fileID: 1830837858}
   m_Layer: 5
   m_Name: AIUpperLeftPawnOne
   m_TagString: Untagged
@@ -5315,6 +5470,19 @@ RectTransform:
   m_AnchoredPosition: {x: -237.99998, y: 240.99997}
   m_SizeDelta: {x: 65, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!65 &1830837858
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830837856}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 65, y: 65, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1870863454
 GameObject:
   m_ObjectHideFlags: 0
@@ -5404,6 +5572,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1880237071}
+  - component: {fileID: 1880237072}
   m_Layer: 5
   m_Name: PlayerPawnThree
   m_TagString: Untagged
@@ -5433,6 +5602,19 @@ RectTransform:
   m_AnchoredPosition: {x: -358, y: -244}
   m_SizeDelta: {x: 65, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!65 &1880237072
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880237070}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 65, y: 65, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1904161258
 GameObject:
   m_ObjectHideFlags: 0
@@ -5442,6 +5624,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1904161259}
+  - component: {fileID: 1904161260}
   m_Layer: 5
   m_Name: AILowerRightPawnTwo
   m_TagString: Untagged
@@ -5471,6 +5654,19 @@ RectTransform:
   m_AnchoredPosition: {x: 238.00002, y: -371}
   m_SizeDelta: {x: 65, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!65 &1904161260
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904161258}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 65, y: 65, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1926375899
 GameObject:
   m_ObjectHideFlags: 0
@@ -5910,6 +6106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2101769020}
+  - component: {fileID: 2101769021}
   m_Layer: 5
   m_Name: PlayerPawnOne
   m_TagString: Untagged
@@ -5939,6 +6136,19 @@ RectTransform:
   m_AnchoredPosition: {x: -238, y: -371}
   m_SizeDelta: {x: 65, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!65 &2101769021
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101769019}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 65, y: 65, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2106789840
 GameObject:
   m_ObjectHideFlags: 0
@@ -6174,6 +6384,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2136036423}
+  - component: {fileID: 2136036424}
   m_Layer: 5
   m_Name: AILowerRightPawnFour
   m_TagString: Untagged
@@ -6203,6 +6414,19 @@ RectTransform:
   m_AnchoredPosition: {x: 358, y: -244}
   m_SizeDelta: {x: 65, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!65 &2136036424
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2136036422}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 65, y: 65, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2136529985
 GameObject:
   m_ObjectHideFlags: 0

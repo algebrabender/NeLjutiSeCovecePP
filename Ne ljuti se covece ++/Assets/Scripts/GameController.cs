@@ -74,10 +74,15 @@ public class GameController : MonoBehaviour
             p.Eaten = false;
             p.NumOfLivesLeft = numOfLives;
             p.Color = playerColor;
-            p.Spot = 0; 
+            p.Spot = 0;
+            p.SpotIfFromPlayer = 0;
             controlledPawns.Add(p);
         }
 
+        controlledPawns[0].StartPosition = positionOne;
+        controlledPawns[1].StartPosition = positionTwo;
+        controlledPawns[2].StartPosition = positionThree;
+        controlledPawns[3].StartPosition = positionFour;
         controlledPawns[0].Position = positionOne;
         controlledPawns[1].Position = positionTwo;
         controlledPawns[2].Position = positionThree;
@@ -143,9 +148,11 @@ public class GameController : MonoBehaviour
                 p.Number = i;
                 p.Eaten = false;
                 p.NumOfLivesLeft = numOfLives;
+                p.StartPosition = positions[j + (i - 1)];
                 p.Position = positions[j + (i - 1)];
                 p.Color = color;
                 p.Spot = 0;
+                p.SpotIfFromPlayer = 14 * ((j+4) / 4);
                 AIPawns.Add(p);
             }
             j+=4;
