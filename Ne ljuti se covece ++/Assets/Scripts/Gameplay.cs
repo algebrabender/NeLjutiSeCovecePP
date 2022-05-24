@@ -182,11 +182,13 @@ public class Gameplay : MonoBehaviour
 
                     pawnNumber = Random.Range(0, 4);
                     rolledNumber = Random.Range(1, 7);
+                    //rolledNumber = 6;
                 }
                 else
                 {
                     pawnNumber = Random.Range(0, 4);
                     rolledNumber = Random.Range(1, 7);
+                    //rolledNumber = 6;
                 }
 
                 yield return new WaitForSeconds(2);
@@ -201,7 +203,26 @@ public class Gameplay : MonoBehaviour
 
                 float deltaX, deltaY;
                 int newSpot;
-                this.CalculateDeltas(GameController.instance.AIPawns[pawnNumber + (i * 4)].Spot, lastRolledValue, out deltaX, out deltaY, out newSpot);
+                this.CalculateDeltas(GameController.instance.AIPawns[pawnNumber + (i * 4)].Spot, rolledNumber, out deltaX, out deltaY, out newSpot);
+
+                float temp;
+                if (i == 0)
+                {
+                    temp = -deltaX;
+                    deltaX = deltaY;
+                    deltaY = temp;
+                }
+                else if (i == 1)
+                {
+                    deltaX *= -1;
+                    deltaY *= -1;
+                }
+                else
+                {
+                    temp = deltaX;
+                    deltaX = -deltaY;
+                    deltaY = temp;
+                }
 
                 AIPawns[pawnNumber + (i * 4)].transform.position = new Vector3(AIPawns[pawnNumber + (i * 4)].transform.position.x + deltaX, AIPawns[pawnNumber + (i * 4)].transform.position.y + deltaY, AIPawns[pawnNumber + (i * 4)].transform.position.z);
                 GameController.instance.AIPawns[pawnNumber + (i * 4)].UpdateLives();
