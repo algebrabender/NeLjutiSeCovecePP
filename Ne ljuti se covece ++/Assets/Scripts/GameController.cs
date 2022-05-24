@@ -18,7 +18,7 @@ public class GameController : MonoBehaviour
     internal List<Pawn> controlledPawns = new List<Pawn>(4);
     internal List<Pawn> AIPawns = new List<Pawn>(12);
 
-    internal int lastRolledValue = -1; //TODO: check if needed
+    internal int lastRolledValue = -1;
 
     public Sprite heartSprite;
     public Sprite cloverSprite;
@@ -74,6 +74,7 @@ public class GameController : MonoBehaviour
             p.Eaten = false;
             p.NumOfLivesLeft = numOfLives;
             p.Color = playerColor;
+            p.Spot = 0; 
             controlledPawns.Add(p);
         }
 
@@ -144,6 +145,7 @@ public class GameController : MonoBehaviour
                 p.NumOfLivesLeft = numOfLives;
                 p.Position = positions[j + (i - 1)];
                 p.Color = color;
+                p.Spot = 0;
                 AIPawns.Add(p);
             }
             j+=4;

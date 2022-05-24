@@ -191,7 +191,7 @@ public class Gameplay : MonoBehaviour
 
                 yield return new WaitForSeconds(2);
             }
-            else if (!GameController.instance.AIPawns[pawnNumber + (i * 4)].Out && GameController.instance.AIPawns[pawnNumber + (i * 4)].Eaten)
+            else if (GameController.instance.AIPawns[pawnNumber + (i * 4)].Out && !GameController.instance.AIPawns[pawnNumber + (i * 4)].Eaten)
             {
                 AudioManager.instance.PlayDiceRollSound();
 
@@ -199,11 +199,13 @@ public class Gameplay : MonoBehaviour
                 historyText.text += "Pawn number: " + pawnNumber + " i: " + i + " index: " + (pawnNumber + (i * 4)) + "\n";
                 historyText.text += "----------------------------------------\n";
 
-                float deltaX = 40.27f * lastRolledValue;
-                float deltaY = 40.63f * lastRolledValue;
+                float deltaX, deltaY;
+                int newSpot;
+                this.CalculateDeltas(GameController.instance.AIPawns[pawnNumber + (i * 4)].Spot, lastRolledValue, out deltaX, out deltaY, out newSpot);
+
                 AIPawns[pawnNumber + (i * 4)].transform.position = new Vector3(AIPawns[pawnNumber + (i * 4)].transform.position.x + deltaX, AIPawns[pawnNumber + (i * 4)].transform.position.y + deltaY, AIPawns[pawnNumber + (i * 4)].transform.position.z);
                 GameController.instance.AIPawns[pawnNumber + (i * 4)].UpdateLives();
-                GameController.instance.AIPawns[pawnNumber + (i * 4)].UpdatePosition(deltaX, deltaY);
+                GameController.instance.AIPawns[pawnNumber + (i * 4)].UpdatePosition(deltaX, deltaY, newSpot);
 
                 pawnNumber = Random.Range(0, 4);
                 rolledNumber = Random.Range(1, 7);
@@ -242,6 +244,188 @@ public class Gameplay : MonoBehaviour
             AIPawns[i].GetComponentInChildren<Image>().sprite = GameController.instance.AIPawns[i].typeSprite;
             AIPawns[i].GetComponentInChildren<Text>().text = GameController.instance.AIPawns[i].Number.ToString();
         }    
+    }
+    
+    private void CalculateDeltas(int currentSpot, int rolledValue, out float deltaX, out float deltaY, out int newSpot)
+    {
+        deltaX = 40.27f;
+        deltaY = 40.63f;
+
+        newSpot = currentSpot + rolledValue;
+        
+        if (newSpot <= 5)
+        {
+            deltaX = 0;
+            deltaY *= rolledValue;
+            return;
+        }
+
+        if (newSpot <= 11)
+        {
+            if (currentSpot >= 5)
+            {
+                deltaX *= -rolledValue;
+                deltaY = 0;
+            }
+            else
+            {
+                deltaX *= -(newSpot - 5);
+                deltaY *= (5 - currentSpot);
+            }
+            return;
+        }
+
+        if (newSpot <= 13)
+        {
+            if (currentSpot >= 11)
+            {
+                deltaX = 0;
+                deltaY *= rolledValue;
+            }
+            else
+            {
+                deltaX *= -(11 - currentSpot);
+                deltaY *= (newSpot - 11);
+            }
+            return;
+        }
+
+        if (newSpot <= 19)
+        {
+            if (currentSpot >= 13)
+            {
+                deltaX *= rolledValue;
+                deltaY = 0;
+            }
+            else if (currentSpot >= 11)
+            {
+                deltaX *= (newSpot - 13);
+                deltaY *= (13 - currentSpot);
+            }
+            else
+            {
+                deltaX *= ((newSpot - 13) - (11 - currentSpot));
+                deltaY *= 2;
+            }
+            return;
+        }
+
+        if (newSpot <= 25)
+        {
+            if (currentSpot >= 19)
+            {
+                deltaX = 0;
+                deltaY *= rolledValue;
+            }
+            else
+            {
+                deltaX *= (19 - currentSpot);
+                deltaY *= (newSpot - 19);
+            }
+            return;
+        }
+
+        if (newSpot <= 27)
+        {
+            if (currentSpot >= 25)
+            {
+                deltaX *= rolledValue;
+                deltaY = 0;
+            }
+            else
+            {
+                deltaX *= (newSpot - 25); 
+                deltaY *= (25 - currentSpot);
+            }
+            return;
+        }
+
+        if (newSpot <= 33)
+        {
+            if (currentSpot >= 27)
+            {
+                deltaX = 0;
+                deltaY *= -rolledValue;
+            }
+            else if (currentSpot >= 25)
+            {
+                deltaX *= (27 - currentSpot);
+                deltaY *= -(newSpot - 27);
+            }
+            else
+            {
+                deltaX *= 2;
+                deltaY *= (-(newSpot - 27) + (25 - currentSpot));
+            }
+            return;
+        }
+        
+        if (newSpot <= 39)
+        {
+            if (currentSpot >= 33)
+            {
+                deltaX *= rolledValue;
+                deltaY = 0;
+            }
+            else
+            {
+                deltaX *= (newSpot - 33);
+                deltaY *= -(33 - currentSpot);
+            }
+            return;
+        }
+
+        if (newSpot <= 41)
+        {
+            if (currentSpot >= 39)
+            {
+                deltaX = 0;
+                deltaY *= -rolledValue;
+            }    
+            else
+            {
+                deltaX *= (39 - currentSpot);
+                deltaY *= -(newSpot - 39);
+            }
+            return;
+        }
+
+        if (newSpot <= 47)
+        {
+            if (currentSpot >= 41)
+            { 
+                deltaX *= -rolledValue;
+                deltaY = 0;
+            }
+            else if (currentSpot >= 39)
+            {
+                deltaX *= -(newSpot - 41);
+                deltaY *= -(41 - currentSpot);
+            }
+            else
+            {
+                deltaX *= (-(newSpot - 41) + (39 - currentSpot));
+                deltaY *= -2;
+            }
+            return;
+        }
+
+        if (newSpot <= 53)
+        {
+            if (currentSpot >= 47)
+            {
+                deltaX = 0;
+                deltaY *= -rolledValue;
+            }
+            else
+            {
+                deltaX *= -(47 - currentSpot);
+                deltaY *= -(newSpot - 47);
+            }
+            return;
+        }
+
+        //TODO: kucice
     }
     #endregion
 
@@ -348,13 +532,13 @@ public class Gameplay : MonoBehaviour
         }
         else if (GameController.instance.controlledPawns[0].Out && !GameController.instance.controlledPawns[0].Eaten)
         {
-            //TODO: add right sign
-            float deltaX = 40.27f * lastRolledValue;
-            float deltaY = 40.63f * lastRolledValue;
-            pawnOne.transform.position = new Vector3(pawnOne.transform.position.x + deltaX, pawnOne.transform.position.y + deltaY, pawnOne.transform.position.z);
-            GameController.instance.controlledPawns[0].UpdateLives();
-            GameController.instance.controlledPawns[0].UpdatePosition(deltaX, deltaY);
+            float deltaX, deltaY;
+            int newSpot;
+            this.CalculateDeltas(GameController.instance.controlledPawns[0].Spot, lastRolledValue, out deltaX, out deltaY, out newSpot);
             
+            pawnOne.transform.position = new Vector3(pawnOne.transform.position.x + deltaX, pawnOne.transform.position.y + deltaY, pawnOne.transform.position.z);
+            GameController.instance.controlledPawns[0].UpdatePosition(deltaX, deltaY, newSpot);
+              
             this.DisableButtons();
             StartCoroutine(this.AITurn());
         }
@@ -375,12 +559,12 @@ public class Gameplay : MonoBehaviour
         }
         else if (GameController.instance.controlledPawns[1].Out && !GameController.instance.controlledPawns[1].Eaten)
         {
-            //TODO: add right sign
-            float deltaX = 40.27f * lastRolledValue;
-            float deltaY = 40.63f * lastRolledValue;
+            float deltaX, deltaY;
+            int newSpot;
+            this.CalculateDeltas(GameController.instance.controlledPawns[1].Spot, lastRolledValue, out deltaX, out deltaY, out newSpot);
+
             pawnTwo.transform.position = new Vector3(pawnTwo.transform.position.x + deltaX, pawnTwo.transform.position.y + deltaY, pawnTwo.transform.position.z);
-            GameController.instance.controlledPawns[1].UpdateLives();
-            GameController.instance.controlledPawns[1].UpdatePosition(deltaX, deltaY);
+            GameController.instance.controlledPawns[1].UpdatePosition(deltaX, deltaY, newSpot);
 
             this.DisableButtons();
             StartCoroutine(this.AITurn());
@@ -402,12 +586,12 @@ public class Gameplay : MonoBehaviour
         }
         else if (GameController.instance.controlledPawns[2].Out && !GameController.instance.controlledPawns[2].Eaten)
         {
-            //TODO: add right sign
-            float deltaX = 40.27f * lastRolledValue;
-            float deltaY = 40.63f * lastRolledValue;
+            float deltaX, deltaY;
+            int newSpot;
+            this.CalculateDeltas(GameController.instance.controlledPawns[2].Spot, lastRolledValue, out deltaX, out deltaY, out newSpot);
+
             pawnThree.transform.position = new Vector3(pawnThree.transform.position.x + deltaX, pawnThree.transform.position.y + deltaY, pawnThree.transform.position.z);
-            GameController.instance.controlledPawns[2].UpdateLives();
-            GameController.instance.controlledPawns[2].UpdatePosition(deltaX, deltaY);
+            GameController.instance.controlledPawns[2].UpdatePosition(deltaX, deltaY, newSpot);
 
             this.DisableButtons();
             StartCoroutine(this.AITurn());
@@ -429,12 +613,12 @@ public class Gameplay : MonoBehaviour
         }
         else if (GameController.instance.controlledPawns[3].Out && !GameController.instance.controlledPawns[3].Eaten)
         {
-            //TODO: add right sign
-            float deltaX = 40.27f * lastRolledValue;
-            float deltaY = 40.63f * lastRolledValue;
+            float deltaX, deltaY;
+            int newSpot;
+            this.CalculateDeltas(GameController.instance.controlledPawns[3].Spot, lastRolledValue, out deltaX, out deltaY, out newSpot);
+
             pawnFour.transform.position = new Vector3(pawnFour.transform.position.x + deltaX, pawnFour.transform.position.y + deltaY, pawnFour.transform.position.z);
-            GameController.instance.controlledPawns[3].UpdateLives();
-            GameController.instance.controlledPawns[3].UpdatePosition(deltaX, deltaY);
+            GameController.instance.controlledPawns[3].UpdatePosition(deltaX, deltaY, newSpot);
 
             this.DisableButtons();
             StartCoroutine(this.AITurn());

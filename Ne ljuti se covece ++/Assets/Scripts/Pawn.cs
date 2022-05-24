@@ -11,6 +11,7 @@ public class Pawn
     public int NumOfLivesLeft { get; set; } // depends on difficulty, if == 0 -> eaten = true
     public string Color { get; set; }
     public Vector2 Position { get; set; }
+    public int Spot { get; set; }
 
     internal void OutedPawn(float x, float y)
     {
@@ -26,8 +27,9 @@ public class Pawn
             Eaten = true;
     }
 
-    internal void UpdatePosition(float x, float y)
+    internal void UpdatePosition(float x, float y, int newSpot)
     {
         Position = new Vector2(Position.x + x, Position.y + y);
+        Spot = newSpot;
     }
 }
