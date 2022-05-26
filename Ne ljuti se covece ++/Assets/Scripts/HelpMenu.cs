@@ -25,8 +25,6 @@ public class HelpMenu : MonoBehaviour
     public void GoBack()
     {
         AudioManager.instance.PlayButtonPressedSound();
-        GameController.instance.playerColor = "";
-        GameController.instance.gameDifficulty = "";
         SceneManager.LoadScene(GameController.instance.lastScene);
     }
 }

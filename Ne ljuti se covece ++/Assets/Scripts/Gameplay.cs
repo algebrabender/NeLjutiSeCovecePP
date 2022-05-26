@@ -132,6 +132,8 @@ public class Gameplay : MonoBehaviour
     {
         rollDiceButton.enabled = false;
 
+        yield return new WaitForSeconds(1.0f);
+
         allowPlay = false;
 
         int rolledNumber = Random.Range(1, 7);
@@ -182,27 +184,30 @@ public class Gameplay : MonoBehaviour
                     AIPawns[pawnNumber + (i * 4)].transform.position = new Vector3(newX, newY, AIPawns[pawnNumber + (i * 4)].transform.position.z);
                     GameController.instance.AIPawns[pawnNumber + (i * 4)].OutedPawn(newX, newY);
 
-                    if (i / 4 == 0)
+                    
+
+                    if (pawnNumber + (i * 4) < 4)
                         GameController.instance.AIPawns[pawnNumber + (i * 4)].SpotIfFromPlayer = 14;
-                    else if (i / 4 == 1)
+                    else if (pawnNumber + (i * 4) < 8)
                         GameController.instance.AIPawns[pawnNumber + (i * 4)].SpotIfFromPlayer = 28;
                     else
                         GameController.instance.AIPawns[pawnNumber + (i * 4)].SpotIfFromPlayer = 42;
 
-                    pawnNumber = Random.Range(0, 4);
+                    this.CheckIfAIEating(GameController.instance.AIPawns[pawnNumber + (i * 4)], GameController.instance.AIPawns[pawnNumber + (i * 4)].SpotIfFromPlayer, true);
+
+                    //pawnNumber = Random.Range(0, 4);
+                    i--;
                     rolledNumber = Random.Range(1, 7);
-                    //rolledNumber = 6;
                 }
                 else
                 {
                     pawnNumber = Random.Range(0, 4);
                     rolledNumber = Random.Range(1, 7);
-                    //rolledNumber = 6;
                 }
 
-                yield return new WaitForSeconds(2);
+                yield return new WaitForSeconds(1.5f);
             }
-            else if (GameController.instance.AIPawns[pawnNumber + (i * 4)].Out && !GameController.instance.AIPawns[pawnNumber + (i * 4)].Eaten)
+            else if (GameController.instance.AIPawns[pawnNumber + (i * 4)].Out)
             {
                 AudioManager.instance.PlayDiceRollSound();
 
@@ -213,7 +218,11 @@ public class Gameplay : MonoBehaviour
                 float deltaX, deltaY;
                 int newSpot;
                 this.CalculateDeltas(GameController.instance.AIPawns[pawnNumber + (i * 4)].Spot, rolledNumber, out deltaX, out deltaY, out newSpot);
-
+                if (this.CheckIfAIEating(GameController.instance.AIPawns[pawnNumber + (i * 4)], GameController.instance.AIPawns[pawnNumber + (i * 4)].SpotIfFromPlayer + rolledNumber))
+                {
+                    this.CalculateDeltas(GameController.instance.AIPawns[pawnNumber + (i * 4)].Spot, rolledNumber - 1, out deltaX, out deltaY, out newSpot);
+                    rolledNumber--;
+                }
                 float temp;
                 if (i == 0)
                 {
@@ -234,20 +243,17 @@ public class Gameplay : MonoBehaviour
                 }
 
                 AIPawns[pawnNumber + (i * 4)].transform.position = new Vector3(AIPawns[pawnNumber + (i * 4)].transform.position.x + deltaX, AIPawns[pawnNumber + (i * 4)].transform.position.y + deltaY, AIPawns[pawnNumber + (i * 4)].transform.position.z);
-                GameController.instance.AIPawns[pawnNumber + (i * 4)].UpdateLives();
                 GameController.instance.AIPawns[pawnNumber + (i * 4)].UpdatePosition(deltaX, deltaY, newSpot, rolledNumber);
 
                 pawnNumber = Random.Range(0, 4);
                 rolledNumber = Random.Range(1, 7);
 
-                yield return new WaitForSeconds(2);
+                yield return new WaitForSeconds(1.5f);
             }
             else
             {
                 historyText.text += "Turn skipped\n";
                 historyText.text += "----------------------------------------\n";
-
-                yield return new WaitForSeconds(2);
             }
         }
 
@@ -498,6 +504,162 @@ public class Gameplay : MonoBehaviour
         }
         return false;
     }
+    
+    private bool CheckIfAIEating(Pawn currentPawn, int newSpot, bool outing = false)
+    {
+        List<Pawn> pawnsToCheck= new List<Pawn>();
+        pawnsToCheck.AddRange(GameController.instance.AIPawns);
+
+        int index = pawnsToCheck.IndexOf(currentPawn);
+
+        if (index / 4 == 0)
+        {
+            pawnsToCheck.RemoveAt(3);
+            pawnsToCheck.RemoveAt(2);
+            pawnsToCheck.RemoveAt(1);
+            pawnsToCheck.RemoveAt(0);
+        }
+        else if (index / 4 == 1)
+        {
+            pawnsToCheck.RemoveAt(7);
+            pawnsToCheck.RemoveAt(6);
+            pawnsToCheck.RemoveAt(5);
+            pawnsToCheck.RemoveAt(4);
+        }
+        else if (index / 4 == 2)
+        {
+            pawnsToCheck.RemoveAt(11);
+            pawnsToCheck.RemoveAt(10);
+            pawnsToCheck.RemoveAt(9);
+            pawnsToCheck.RemoveAt(8);
+        }
+
+        foreach (Pawn p in pawnsToCheck)
+        {
+            if (p.SpotIfFromPlayer == newSpot)
+            {
+                if (!outing)
+                {
+                    if (p.UpdateLives()) //eaten
+                    {
+                        index = pawnsToCheck.IndexOf(p);
+                        AIPawns[index].transform.position = new Vector3(p.Position.x, p.Position.y, 0.0f);
+                        
+                        if (index / 4 == 0)
+                            p.SpotIfFromPlayer = 14;
+                        else if (index / 4 == 1)
+                            p.SpotIfFromPlayer = 28;
+                        else
+                            p.SpotIfFromPlayer = 42;
+                        return false;
+                    }
+                    else
+                        return true;
+                }
+                else
+                {
+                    while (!p.UpdateLives())
+                        p.UpdateLives();
+                    index = pawnsToCheck.IndexOf(p);
+                    AIPawns[index].transform.position = new Vector3(p.Position.x, p.Position.y, 0.0f);
+                    
+                    if (index / 4 == 0)
+                        p.SpotIfFromPlayer = 14;
+                    else if (index / 4 == 1)
+                        p.SpotIfFromPlayer = 28;
+                    else
+                        p.SpotIfFromPlayer = 42;
+                    return false;
+                }
+            }
+        }
+        
+        if (GameController.instance.controlledPawns[0].Spot == newSpot)
+        {
+            if (!outing)
+            {
+                if (GameController.instance.controlledPawns[0].UpdateLives())
+                {
+                    pawnOne.transform.position = new Vector3(GameController.instance.controlledPawns[0].Position.x, GameController.instance.controlledPawns[0].Position.y, 0.0f);
+                    return false;
+                }
+                else
+                    return true;
+            }
+            else
+            {
+                while (!GameController.instance.controlledPawns[0].UpdateLives())
+                    GameController.instance.controlledPawns[0].UpdateLives();
+                pawnOne.transform.position = new Vector3(GameController.instance.controlledPawns[0].Position.x, GameController.instance.controlledPawns[0].Position.y, 0.0f);
+                return false;
+            }
+        }
+
+        if (GameController.instance.controlledPawns[1].Spot == newSpot)
+        {
+            if (!outing)
+            {
+                if (GameController.instance.controlledPawns[1].UpdateLives())
+                {
+                    pawnTwo.transform.position = new Vector3(GameController.instance.controlledPawns[1].Position.x, GameController.instance.controlledPawns[1].Position.y, 0.0f);
+                    return false;
+                }
+                else
+                    return true;
+            }
+            else
+            {
+                while (!GameController.instance.controlledPawns[0].UpdateLives())
+                    GameController.instance.controlledPawns[0].UpdateLives();
+                pawnOne.transform.position = new Vector3(GameController.instance.controlledPawns[0].Position.x, GameController.instance.controlledPawns[0].Position.y, 0.0f);
+                return false;
+            }
+        }
+
+        if (GameController.instance.controlledPawns[2].Spot == currentPawn.SpotIfFromPlayer)
+        {
+            if (!outing)
+            {
+                if (GameController.instance.controlledPawns[2].UpdateLives())
+                {
+                    pawnThree.transform.position = new Vector3(GameController.instance.controlledPawns[2].Position.x, GameController.instance.controlledPawns[2].Position.y, 0.0f);
+                    return false;
+                }
+                else
+                    return true;
+            }
+            else
+            {
+                while (!GameController.instance.controlledPawns[0].UpdateLives())
+                    GameController.instance.controlledPawns[0].UpdateLives();
+                pawnOne.transform.position = new Vector3(GameController.instance.controlledPawns[0].Position.x, GameController.instance.controlledPawns[0].Position.y, 0.0f);
+                return false;
+            }
+        }
+
+        if (GameController.instance.controlledPawns[3].Spot == currentPawn.SpotIfFromPlayer)
+        {
+            if (!outing)
+            {
+                if (GameController.instance.controlledPawns[3].UpdateLives())
+                {
+                    pawnFour.transform.position = new Vector3(GameController.instance.controlledPawns[3].Position.x, GameController.instance.controlledPawns[3].Position.y, 0.0f);
+                    return false;
+                }
+                else
+                    return true;
+            }
+            else
+            {
+                while (!GameController.instance.controlledPawns[0].UpdateLives())
+                    GameController.instance.controlledPawns[0].UpdateLives();
+                pawnOne.transform.position = new Vector3(GameController.instance.controlledPawns[0].Position.x, GameController.instance.controlledPawns[0].Position.y, 0.0f);
+                return false;
+            }
+        }
+
+        return false;
+    }
     #endregion
 
     #region Methodes
@@ -579,8 +741,6 @@ public class Gameplay : MonoBehaviour
 
         for (int i = 0; i < 4; i++)
         {
-            if (!GameController.instance.controlledPawns[i].Eaten)
-                buttons[i].enabled = true;
             if (GameController.instance.controlledPawns[i].Out)
                 buttons[i].enabled = true;
             else if (lastRolledValue != 6)
@@ -589,6 +749,11 @@ public class Gameplay : MonoBehaviour
 
         if (lastRolledValue == 6)
         {
+            pawnOneButton.enabled = true;
+            pawnTwoButton.enabled = true;
+            pawnThreeButton.enabled = true;
+            pawnFourButton.enabled = true;
+
             if (GameController.instance.controlledPawns[0].Out && GameController.instance.controlledPawns[0].Spot == 0)
             {
                 if (!GameController.instance.controlledPawns[1].Out)
@@ -662,8 +827,18 @@ public class Gameplay : MonoBehaviour
             GameController.instance.controlledPawns[3].Spot + lastRolledValue == GameController.instance.controlledPawns[2].Spot))
             pawnFourButton.enabled = false;
 
+        foreach (Button b in buttons)
+        {
+            if (b.enabled)
+            {
+                allowPlay = true;
+                return;
+            }
+        }
 
-        allowPlay = true;
+        //no avaiable move
+        allowPlay = false;
+        StartCoroutine(this.AITurn());
     }
 
     public void PawnOne()
@@ -677,7 +852,7 @@ public class Gameplay : MonoBehaviour
 
             this.DisableButtons();
         }
-        else if (GameController.instance.controlledPawns[0].Out && !GameController.instance.controlledPawns[0].Eaten)
+        else if (GameController.instance.controlledPawns[0].Out)
         {
             float deltaX, deltaY;
             int newSpot;
@@ -702,7 +877,7 @@ public class Gameplay : MonoBehaviour
 
             this.CheckIfEating(0, true);
         }
-        else if (GameController.instance.controlledPawns[1].Out && !GameController.instance.controlledPawns[1].Eaten)
+        else if (GameController.instance.controlledPawns[1].Out)
         {
             float deltaX, deltaY;
             int newSpot;
@@ -727,7 +902,7 @@ public class Gameplay : MonoBehaviour
 
             this.CheckIfEating(0, true);
         }
-        else if (GameController.instance.controlledPawns[2].Out && !GameController.instance.controlledPawns[2].Eaten)
+        else if (GameController.instance.controlledPawns[2].Out)
         {
             float deltaX, deltaY;
             int newSpot;
@@ -752,7 +927,7 @@ public class Gameplay : MonoBehaviour
 
             this.CheckIfEating(0, true);
         }
-        else if (GameController.instance.controlledPawns[3].Out && !GameController.instance.controlledPawns[3].Eaten)
+        else if (GameController.instance.controlledPawns[3].Out)
         {
             float deltaX, deltaY;
             int newSpot;

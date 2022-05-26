@@ -71,7 +71,7 @@ public class GameController : MonoBehaviour
             p.typeSprite = sprite;
             p.Number = i;
             p.Out = false;
-            p.Eaten = false;
+            p.StartNumOfLives = numOfLives;
             p.NumOfLivesLeft = numOfLives;
             p.Color = playerColor;
             p.Spot = 0;
@@ -146,13 +146,14 @@ public class GameController : MonoBehaviour
                 Pawn p = new Pawn();
                 p.typeSprite = sprite;
                 p.Number = i;
-                p.Eaten = false;
+                p.StartNumOfLives = numOfLives;
                 p.NumOfLivesLeft = numOfLives;
                 p.StartPosition = positions[j + (i - 1)];
                 p.Position = positions[j + (i - 1)];
                 p.Color = color;
                 p.Spot = 0;
-                p.SpotIfFromPlayer = 14 * ((j+4) / 4);
+                //p.SpotIfFromPlayer = 14 * ((j+4) / 4);
+                p.SpotIfFromPlayer = -1;
                 AIPawns.Add(p);
             }
             j+=4;

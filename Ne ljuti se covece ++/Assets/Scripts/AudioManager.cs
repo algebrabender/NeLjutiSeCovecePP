@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -22,6 +23,10 @@ public class AudioManager : MonoBehaviour
     public static AudioSource buttonPressedAudioSource;
     public static AudioSource turnAudioSource;
 
+    internal float allVolumeMultiplier = 1.0f;
+    internal float backgroundVolume = 1.0f;
+    internal float effectsVolume = 1.0f;
+
     private AudioSource AddAudio(AudioClip clip, bool playOnAwake, bool loop, float volume)
     {
         AudioSource audioSource = gameObject.AddComponent<AudioSource>();
@@ -41,15 +46,27 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
-        backgroundAudioSource = AddAudio(backgroundAudioClip, false, true, 1.0f);
-        diceRollAudioSource = AddAudio(diceRollAudioClip, false, false, 1.0f);
-        inHouseAudioSource = AddAudio(inHouseAudioClip, false, false, 1.0f);
-        winAudioSource = AddAudio(winAudioClip, false, false, 1.0f);
-        eatAudioSource = AddAudio(eatAudioClip, false, false, 1.0f);
-        buttonPressedAudioSource = AddAudio(buttonPressedAudioClip, false, false, 1.0f);
-        turnAudioSource = AddAudio(turnAudioClip, false, false, 1.0f);
+        using (StreamReader sr = new StreamReader("optionValues.txt"))
+        {
+            string line = sr.ReadLine();
+            allVolumeMultiplier = float.Parse(line.Split(':')[1]);
+            line = sr.ReadLine();
+            backgroundVolume = float.Parse(line.Split(':')[1]);
+            line = sr.ReadLine();
+            effectsVolume = float.Parse(line.Split(':')[1]);
+        }
 
-        //backgroundAudioSource.Play();
+        diceRollAudioSource = AddAudio(diceRollAudioClip, false, false, effectsVolume * allVolumeMultiplier);
+        inHouseAudioSource = AddAudio(inHouseAudioClip, false, false, effectsVolume * allVolumeMultiplier);
+        winAudioSource = AddAudio(winAudioClip, false, false, effectsVolume * allVolumeMultiplier);
+        eatAudioSource = AddAudio(eatAudioClip, false, false, effectsVolume * allVolumeMultiplier);
+        buttonPressedAudioSource = AddAudio(buttonPressedAudioClip, false, false, effectsVolume * allVolumeMultiplier);
+
+        if (backgroundAudioSource == null || !backgroundAudioSource.isPlaying)
+        {
+            backgroundAudioSource = AddAudio(backgroundAudioClip, false, true, backgroundVolume * allVolumeMultiplier);
+            backgroundAudioSource.Play();
+        }
     }
 
     #region PlaySounds
@@ -64,5 +81,27 @@ public class AudioManager : MonoBehaviour
         buttonPressedAudioSource.Play();
     }
 
+    public void SetAllSoundsVolume(float multiplier)
+    {
+        allVolumeMultiplier = multiplier;
+        SetBackgroundVolume(backgroundAudioSource.volume);
+        SetEffectsVolume(diceRollAudioSource.volume);
+    }
+
+    public void SetBackgroundVolume(float volume)
+    {
+        backgroundVolume = volume;
+        backgroundAudioSource.volume = volume * allVolumeMultiplier;
+    }
+
+    public void SetEffectsVolume(float volume)
+    {
+        effectsVolume = volume;
+        diceRollAudioSource.volume = volume * allVolumeMultiplier;
+        inHouseAudioSource.volume = volume * allVolumeMultiplier;
+        winAudioSource.volume = volume * allVolumeMultiplier;
+        eatAudioSource.volume = volume * allVolumeMultiplier;
+        buttonPressedAudioSource.volume = volume * allVolumeMultiplier;
+    }
     #endregion
 }
