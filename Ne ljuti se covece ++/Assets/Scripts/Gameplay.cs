@@ -545,6 +545,9 @@ public class Gameplay : MonoBehaviour
     
     private bool CheckIfEating(int newSpot, bool outing = false)
     {
+        if (newSpot >= 55)
+            return false;
+
         foreach (Pawn p in GameController.instance.AIPawns)
         {
             if (p.SpotIfFromPlayer == newSpot)
@@ -590,6 +593,9 @@ public class Gameplay : MonoBehaviour
     
     private bool CheckIfAIEating(Pawn currentPawn, int newSpot, bool outing = false)
     {
+        if (newSpot >= 55)
+            return false; 
+
         List<Pawn> pawnsToCheck= new List<Pawn>();
         pawnsToCheck.AddRange(GameController.instance.AIPawns);
 
@@ -704,7 +710,7 @@ public class Gameplay : MonoBehaviour
             }
         }
 
-        if (GameController.instance.controlledPawns[2].Spot == currentPawn.SpotIfFromPlayer)
+        if (GameController.instance.controlledPawns[2].Spot == newSpot)
         {
             if (!outing)
             {
@@ -726,7 +732,7 @@ public class Gameplay : MonoBehaviour
             }
         }
 
-        if (GameController.instance.controlledPawns[3].Spot == currentPawn.SpotIfFromPlayer)
+        if (GameController.instance.controlledPawns[3].Spot == newSpot)
         {
             if (!outing)
             {
@@ -787,6 +793,9 @@ public class Gameplay : MonoBehaviour
 
     void Update()
     {
+        if (GameController.instance.controlledHousesLeft == 0)
+            SceneManager.LoadScene(0);
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             this.GoBack();
@@ -934,7 +943,7 @@ public class Gameplay : MonoBehaviour
 
         //no avaiable move
         allowPlay = false;
-        StartCoroutine(this.AITurn());
+        //StartCoroutine(this.AITurn());
     }
 
     public void PawnOne()
@@ -963,7 +972,7 @@ public class Gameplay : MonoBehaviour
                 GameController.instance.controlledPawns[0].Spot = 59; //in house so there is no "eating"
 
             this.DisableButtons();
-            StartCoroutine(this.AITurn());
+            //StartCoroutine(this.AITurn());
         }
     }
 
@@ -991,7 +1000,7 @@ public class Gameplay : MonoBehaviour
                 GameController.instance.controlledPawns[1].Spot = 59; //in house so there is no "eating"
 
             this.DisableButtons();
-            StartCoroutine(this.AITurn());
+            //StartCoroutine(this.AITurn());
         }
     }
 
@@ -1019,7 +1028,7 @@ public class Gameplay : MonoBehaviour
                 GameController.instance.controlledPawns[2].Spot = 59; //in house so there is no "eating"
 
             this.DisableButtons();
-            StartCoroutine(this.AITurn());
+            //StartCoroutine(this.AITurn());
         }
     }
 
@@ -1047,7 +1056,7 @@ public class Gameplay : MonoBehaviour
                 GameController.instance.controlledPawns[3].Spot = 59; //in house so there is no "eating"
 
             this.DisableButtons();
-            StartCoroutine(this.AITurn());
+            //StartCoroutine(this.AITurn());
         }
     }
 
