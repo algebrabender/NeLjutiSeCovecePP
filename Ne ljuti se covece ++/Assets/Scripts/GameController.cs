@@ -17,6 +17,10 @@ public class GameController : MonoBehaviour
 
     internal List<Pawn> controlledPawns = new List<Pawn>(4);
     internal List<Pawn> AIPawns = new List<Pawn>(12);
+    internal int controlledHousesLeft = 4;
+    internal int upperLeftHousesLeft = 4;
+    internal int upperRightHousesLeft = 4;
+    internal int lowerRightHousesLeft = 4;
 
     internal int lastRolledValue = -1;
 
