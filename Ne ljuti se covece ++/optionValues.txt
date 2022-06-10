@@ -1,3 +1,3 @@
-All Sounds Volume:0.587945
+All Sounds Volume:0
 Background Volume:0
-Effects Volume:0.8797376
+Effects Volume:1

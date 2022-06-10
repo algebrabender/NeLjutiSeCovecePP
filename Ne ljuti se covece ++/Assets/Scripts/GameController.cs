@@ -14,13 +14,19 @@ public class GameController : MonoBehaviour
     internal int lastScene = -1;
     internal string playerColor = "";
     internal string gameDifficulty = "";
+    internal string playerColorTranslation = "";
+    internal string gameDifficultyTranslation = "";
+    internal string winnerText = "";
 
     internal List<Pawn> controlledPawns = new List<Pawn>(4);
     internal List<Pawn> AIPawns = new List<Pawn>(12);
     internal int controlledHousesLeft = 4;
     internal int upperLeftHousesLeft = 4;
+    internal string upperLeftColor = "";
     internal int upperRightHousesLeft = 4;
+    internal string upperRightColor = "";
     internal int lowerRightHousesLeft = 4;
+    internal string lowerRightColor = "";
 
     internal int lastRolledValue = -1;
 
@@ -114,15 +120,27 @@ public class GameController : MonoBehaviour
         {
             case "red":
                 colors.AddRange(new string[] { "blue", "green", "yellow" });
+                upperLeftColor = "blue";
+                upperRightColor = "green";
+                lowerRightColor = "yellow";
                 break;
             case "blue":
                 colors.AddRange(new string[] { "green", "yellow", "red" });
+                upperLeftColor = "green";
+                upperRightColor = "yellow";
+                lowerRightColor = "red";
                 break;
             case "green":
                 colors.AddRange(new string[] { "yellow", "red", "blue" });
+                upperLeftColor = "yellow";
+                upperRightColor = "red";
+                lowerRightColor = "blue";
                 break;
             case "yellow":
                 colors.AddRange(new string[] { "red", "blue", "green"});
+                upperLeftColor = "red";
+                upperRightColor = "blue";
+                lowerRightColor = "green";
                 break;
         }
 

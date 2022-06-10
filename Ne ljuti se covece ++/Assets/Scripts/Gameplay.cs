@@ -756,6 +756,23 @@ public class Gameplay : MonoBehaviour
 
         return false;
     }
+    
+    private string GameOverTextTranslation(string color)
+    {
+        switch (GameController.instance.upperLeftColor)
+        {
+            case "red":
+                return "crveni";
+            case "blue":
+                return "plavi";
+            case "green":
+                return "zeleni";
+            case "yellow":
+                return "žuti";
+            default:
+                return "";
+        }
+    }
     #endregion
 
     #region Methodes
@@ -763,7 +780,8 @@ public class Gameplay : MonoBehaviour
     {
         GameController.instance.lastScene = SceneManager.GetActiveScene().buildIndex;
 
-        historyText.text = "";
+        historyText.text = "Izabrana boja: " + GameController.instance.playerColorTranslation +
+                            "\nIzabrana težina: " + GameController.instance.gameDifficultyTranslation + "\n";
 
         this.SetColors();
 
@@ -794,7 +812,31 @@ public class Gameplay : MonoBehaviour
     void Update()
     {
         if (GameController.instance.controlledHousesLeft == 0)
-            SceneManager.LoadScene(0);
+        {
+            GameController.instance.winnerText = "POBEDA";
+            SceneManager.LoadScene(3);
+        }
+            
+        if (GameController.instance.upperLeftHousesLeft == 0)
+        {
+            string color = GameOverTextTranslation(GameController.instance.upperLeftColor);
+            GameController.instance.winnerText = "POBEDIO JE " + color.ToUpper();
+            SceneManager.LoadScene(3);
+        }
+
+        if (GameController.instance.upperRightHousesLeft == 0)
+        {
+            string color = GameOverTextTranslation(GameController.instance.upperRightColor);
+            GameController.instance.winnerText = "POBEDIO JE " + color.ToUpper();
+            SceneManager.LoadScene(3);
+        }
+
+        if (GameController.instance.lowerRightHousesLeft == 0)
+        {
+            string color = GameOverTextTranslation(GameController.instance.lowerRightColor);
+            GameController.instance.winnerText = "POBEDIO JE " + color.ToUpper();
+            SceneManager.LoadScene(3);
+        }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -943,7 +985,7 @@ public class Gameplay : MonoBehaviour
 
         //no avaiable move
         allowPlay = false;
-        //StartCoroutine(this.AITurn());
+        StartCoroutine(this.AITurn());
     }
 
     public void PawnOne()
@@ -972,7 +1014,7 @@ public class Gameplay : MonoBehaviour
                 GameController.instance.controlledPawns[0].Spot = 59; //in house so there is no "eating"
 
             this.DisableButtons();
-            //StartCoroutine(this.AITurn());
+            StartCoroutine(this.AITurn());
         }
     }
 
@@ -1000,7 +1042,7 @@ public class Gameplay : MonoBehaviour
                 GameController.instance.controlledPawns[1].Spot = 59; //in house so there is no "eating"
 
             this.DisableButtons();
-            //StartCoroutine(this.AITurn());
+            StartCoroutine(this.AITurn());
         }
     }
 
@@ -1028,7 +1070,7 @@ public class Gameplay : MonoBehaviour
                 GameController.instance.controlledPawns[2].Spot = 59; //in house so there is no "eating"
 
             this.DisableButtons();
-            //StartCoroutine(this.AITurn());
+            StartCoroutine(this.AITurn());
         }
     }
 
@@ -1056,7 +1098,7 @@ public class Gameplay : MonoBehaviour
                 GameController.instance.controlledPawns[3].Spot = 59; //in house so there is no "eating"
 
             this.DisableButtons();
-            //StartCoroutine(this.AITurn());
+            StartCoroutine(this.AITurn());
         }
     }
 
