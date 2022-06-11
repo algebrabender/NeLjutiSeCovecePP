@@ -39,58 +39,32 @@ public class Gameplay : MonoBehaviour
     #region Private Methodes
     private void SetColors()
     {
-        ColorBlock colorBlockOne = pawnOneButton.colors;
-        ColorBlock colorBlockTwo = pawnTwoButton.colors;
-        ColorBlock colorBlockThree = pawnThreeButton.colors;
-        ColorBlock colorBlockFour = pawnFourButton.colors;
+        ColorBlock colorBlock = pawnOneButton.colors;
 
         switch (GameController.instance.playerColor)
         {
             case "red":
-                colorBlockOne.normalColor = new Color(241f / 255f, 87f / 255f, 87f / 255f);
-                pawnOneButton.colors = colorBlockOne;
-                colorBlockTwo.normalColor = new Color(241f / 255f, 87f / 255f, 87f / 255f);
-                pawnTwoButton.colors = colorBlockTwo;
-                colorBlockThree.normalColor = new Color(241f / 255f, 87f / 255f, 87f / 255f);
-                pawnThreeButton.colors = colorBlockThree;
-                colorBlockFour.normalColor = new Color(241f / 255f, 87f / 255f, 87f / 255f);
-                pawnFourButton.colors = colorBlockFour;
-                boardImage.sprite = redBoardSprite;
+                colorBlock.normalColor = new Color(241f / 255f, 87f / 255f, 87f / 255f);
+                boardImage.sprite = redBoardSprite;               
                 break;
             case "blue":
-                colorBlockOne.normalColor = new Color(93f / 255f, 102f / 255f, 255f / 255f);
-                pawnOneButton.colors = colorBlockOne;
-                colorBlockTwo.normalColor = new Color(93f / 255f, 102f / 255f, 255f / 255f);
-                pawnTwoButton.colors = colorBlockTwo;
-                colorBlockThree.normalColor = new Color(93f / 255f, 102f / 255f, 255f / 255f);
-                pawnThreeButton.colors = colorBlockThree;
-                colorBlockFour.normalColor = new Color(93f / 255f, 102f / 255f, 255f / 255f);
-                pawnFourButton.colors = colorBlockFour;
+                colorBlock.normalColor = new Color(93f / 255f, 102f / 255f, 255f / 255f);
                 boardImage.sprite = blueBoardSprite;
                 break;
             case "green":
-                colorBlockOne.normalColor = new Color(53f / 255f, 204f / 255f, 97f / 255f);
-                pawnOneButton.colors = colorBlockOne;
-                colorBlockTwo.normalColor = new Color(53f / 255f, 204f / 255f, 97f / 255f);
-                pawnTwoButton.colors = colorBlockTwo;
-                colorBlockThree.normalColor = new Color(53f / 255f, 204f / 255f, 97f / 255f);
-                pawnThreeButton.colors = colorBlockThree;
-                colorBlockFour.normalColor = new Color(53f / 255f, 204f / 255f, 97f / 255f);
-                pawnFourButton.colors = colorBlockFour;
+                colorBlock.normalColor = new Color(53f / 255f, 204f / 255f, 97f / 255f);
                 boardImage.sprite = greenBoardSprite;
                 break;
             case "yellow":
-                colorBlockOne.normalColor = new Color(255f / 255f, 238f / 255f, 78f / 255f);
-                pawnOneButton.colors = colorBlockOne;
-                colorBlockTwo.normalColor = new Color(255f / 255f, 238f / 255f, 78f / 255f);
-                pawnTwoButton.colors = colorBlockTwo;
-                colorBlockThree.normalColor = new Color(255f / 255f, 238f / 255f, 78f / 255f);
-                pawnThreeButton.colors = colorBlockThree;
-                colorBlockFour.normalColor = new Color(255f / 255f, 238f / 255f, 78f / 255f);
-                pawnFourButton.colors = colorBlockFour;
+                colorBlock.normalColor = new Color(255f / 255f, 238f / 255f, 78f / 255f);
                 boardImage.sprite = yellowBoardSprite;
                 break;
         }
+
+        pawnOneButton.colors = colorBlock;
+        pawnTwoButton.colors = colorBlock;
+        pawnThreeButton.colors = colorBlock;
+        pawnFourButton.colors = colorBlock;
     }
 
     private void SetButtonListeners()
@@ -99,6 +73,7 @@ public class Gameplay : MonoBehaviour
 
         rollDiceButton.onClick.AddListener(AudioManager.instance.PlayButtonPressedSound);
         rollDiceButton.onClick.AddListener(AudioManager.instance.PlayDiceRollSound);
+        rollDiceButton.onClick.AddListener(RollDice);
 
         pawnOneButton.onClick.RemoveAllListeners();
         pawnTwoButton.onClick.RemoveAllListeners();
@@ -138,21 +113,17 @@ public class Gameplay : MonoBehaviour
 
         int rolledNumber = Random.Range(1, 7);
         int pawnNumber = Random.Range(0, 4);
+        int outedPawn = -1;
 
         for (int i = 0; i < 3; i++)
         {
             if (!GameController.instance.AIPawns[pawnNumber + (i * 4)].Out && rolledNumber == 6)
             {
-
-                historyText.text += "Kockica je pala na: " + rolledNumber + "\n";
-                historyText.text += "Pawn number: " + pawnNumber + " i: " + i + " index: " + (pawnNumber + (i * 4)) + "\n";
-                historyText.text += "----------------------------------------\n";
-
                 float newX;
                 float newY;
                 if (i == 0) //upper left
                 {
-                    newX = 103.38f;
+                    newX = 100.38f;
                     newY = 366.72f;
                 }
                 else if (i == 1) //upper right
@@ -162,7 +133,7 @@ public class Gameplay : MonoBehaviour
                 }
                 else //lower right
                 {
-                    newX = 584.21f;
+                    newX = 587.21f;
                     newY = 285.94f;
                 }
 
@@ -175,6 +146,7 @@ public class Gameplay : MonoBehaviour
                         && (float)System.Math.Round(GameController.instance.AIPawns[j].Position.y, 2) == newY)
                     {
                         thereIsOuted = true;
+                        outedPawn = j % 4;
                         break;
                     }
                 }
@@ -183,8 +155,6 @@ public class Gameplay : MonoBehaviour
                 {
                     AIPawns[pawnNumber + (i * 4)].transform.position = new Vector3(newX, newY, AIPawns[pawnNumber + (i * 4)].transform.position.z);
                     GameController.instance.AIPawns[pawnNumber + (i * 4)].OutedPawn(newX, newY);
-
-                    
 
                     if (pawnNumber + (i * 4) < 4)
                         GameController.instance.AIPawns[pawnNumber + (i * 4)].SpotIfFromPlayer = 14;
@@ -195,55 +165,79 @@ public class Gameplay : MonoBehaviour
 
                     this.CheckIfAIEating(GameController.instance.AIPawns[pawnNumber + (i * 4)], GameController.instance.AIPawns[pawnNumber + (i * 4)].SpotIfFromPlayer, true);
 
-                    //pawnNumber = Random.Range(0, 4);
-                    i--;
+                    historyText.text += "Kockica je pala na: " + rolledNumber + "\n";
+                    historyText.text += "Pawn number: " + pawnNumber + " i: " + i + " index: " + (pawnNumber + (i * 4)) + "\n";
+                    historyText.text += "----------------------------------------\n";
+
+                    pawnNumber = Random.Range(0, 4);
                     rolledNumber = Random.Range(1, 7);
+   
                 }
                 else
                 {
-                    pawnNumber = Random.Range(0, 4);
-                    rolledNumber = Random.Range(1, 7);
+                    i--;
+                    //pawnNumber = Random.Range(0, 4);
+                    pawnNumber = outedPawn;
+                    //rolledNumber = Random.Range(1, 7);
+                    continue;
                 }
 
                 yield return new WaitForSeconds(1.5f);
             }
-            else if (GameController.instance.AIPawns[pawnNumber + (i * 4)].Out)
+            else if (GameController.instance.AIPawns[pawnNumber + (i * 4)].Out && GameController.instance.AIPawns[pawnNumber + (i * 4)].Spot != 59)
             {
                 AudioManager.instance.PlayDiceRollSound();
-
-                historyText.text += "Kockica je pala na: " + rolledNumber + "\n";
-                historyText.text += "Pawn number: " + pawnNumber + " i: " + i + " index: " + (pawnNumber + (i * 4)) + "\n";
-                historyText.text += "----------------------------------------\n";
 
                 float deltaX, deltaY;
                 int newSpot;
                 this.CalculateDeltas(GameController.instance.AIPawns[pawnNumber + (i * 4)].Spot, rolledNumber, out deltaX, out deltaY, out newSpot, i);
 
-                bool sameSpot = false;
-                for (int j = i * 4; j < i * 4 + 4; j++)
+                if (newSpot != 59)
                 {
-                    if (pawnNumber + i * 4 != j)
-                        if (GameController.instance.AIPawns[j].Spot == newSpot)
+                    bool sameSpot = false;
+                    for (int j = i * 4; j < i * 4 + 4; j++)
+                    {
+                        if (pawnNumber + i * 4 != j)
+                            if (GameController.instance.AIPawns[j].Spot == newSpot)
+                            {
+                                sameSpot = true;
+                                break;
+                            }
+                    }
+
+                    if (sameSpot)
+                    {
+                        i--;
+                        pawnNumber = Random.Range(0, 4);
+                        rolledNumber = Random.Range(1, 7);
+                        continue;
+                    }
+
+                    if (newSpot < 55)
+                    {
+                        if (GameController.instance.AIPawns[pawnNumber + (i * 4)].SpotIfFromPlayer + rolledNumber < 56)
                         {
-                            sameSpot = true;
-                            break;
+                            if (this.CheckIfAIEating(GameController.instance.AIPawns[pawnNumber + (i * 4)], GameController.instance.AIPawns[pawnNumber + (i * 4)].SpotIfFromPlayer + rolledNumber))
+                            {
+                                this.CalculateDeltas(GameController.instance.AIPawns[pawnNumber + (i * 4)].Spot, rolledNumber - 1, out deltaX, out deltaY, out newSpot, i);
+                                rolledNumber--;
+                            }
                         }
+                        else
+                        {
+                            if (this.CheckIfAIEating(GameController.instance.AIPawns[pawnNumber + (i * 4)], GameController.instance.AIPawns[pawnNumber + (i * 4)].SpotIfFromPlayer + rolledNumber - 56))
+                            {
+                                this.CalculateDeltas(GameController.instance.AIPawns[pawnNumber + (i * 4)].Spot, rolledNumber - 1, out deltaX, out deltaY, out newSpot, i);
+                                rolledNumber--;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    Debug.Log("just this");   
                 }
 
-                if (sameSpot)
-                {
-                    i--;
-                    pawnNumber = Random.Range(0, 4);
-                    rolledNumber = Random.Range(1, 7);
-                    break;
-                }
-
-                if (this.CheckIfAIEating(GameController.instance.AIPawns[pawnNumber + (i * 4)], GameController.instance.AIPawns[pawnNumber + (i * 4)].SpotIfFromPlayer + rolledNumber))
-                {
-                    this.CalculateDeltas(GameController.instance.AIPawns[pawnNumber + (i * 4)].Spot, rolledNumber - 1, out deltaX, out deltaY, out newSpot, i);
-                    rolledNumber--;
-                }
-                
                 float temp;
                 if (i == 0)
                 {
@@ -263,8 +257,15 @@ public class Gameplay : MonoBehaviour
                     deltaY = temp;
                 }
 
+                if (deltaX == 0 && deltaY == 0)
+                    rolledNumber = 0;
+
                 AIPawns[pawnNumber + (i * 4)].transform.position = new Vector3(AIPawns[pawnNumber + (i * 4)].transform.position.x + deltaX, AIPawns[pawnNumber + (i * 4)].transform.position.y + deltaY, AIPawns[pawnNumber + (i * 4)].transform.position.z);
                 GameController.instance.AIPawns[pawnNumber + (i * 4)].UpdatePosition(deltaX, deltaY, newSpot, rolledNumber);
+
+                historyText.text += "Kockica je pala na: " + rolledNumber + "\n";
+                historyText.text += "Pawn number: " + pawnNumber + " i: " + i + " index: " + (pawnNumber + (i * 4)) + "\n";
+                historyText.text += "----------------------------------------\n";
 
                 pawnNumber = Random.Range(0, 4);
                 rolledNumber = Random.Range(1, 7);
@@ -273,8 +274,14 @@ public class Gameplay : MonoBehaviour
             }
             else
             {
-                historyText.text += "Turn skipped\n";
-                historyText.text += "----------------------------------------\n";
+                //historyText.text += "Turn skipped\n";
+                //historyText.text += "----------------------------------------\n";
+                i--;
+                int prevPawnNumber = pawnNumber;
+                pawnNumber = Random.Range(0, 4);
+                while (pawnNumber == prevPawnNumber)
+                    pawnNumber = Random.Range(0, 4);
+                rolledNumber = Random.Range(1, 7);
             }
         }
 
@@ -490,7 +497,14 @@ public class Gameplay : MonoBehaviour
                 deltaY *= -(53 - currentSpot);
         }
 
-        if (newSpot >= 55)
+        if (newSpot >= 59)
+        {
+            newSpot = currentSpot;
+            deltaX = 0;
+            deltaY = 0;
+        }
+
+        if (newSpot >= 55 && newSpot < 59)
         {
             bool allowed = true;
             switch(ai)
@@ -515,7 +529,7 @@ public class Gameplay : MonoBehaviour
                     break;
                 case 0:
                     if (GameController.instance.upperLeftHousesLeft == newSpot - 54)
-                        GameController.instance.upperLeftHousesLeft--;
+                         GameController.instance.upperLeftHousesLeft--;
                     else
                         allowed = false;
                     break;
@@ -533,6 +547,7 @@ public class Gameplay : MonoBehaviour
                     deltaX *= -1;
                     deltaY *= (-(53 - currentSpot) + (newSpot - 54));
                 }
+                newSpot = 59;
             }
             else
             {
@@ -593,8 +608,8 @@ public class Gameplay : MonoBehaviour
     
     private bool CheckIfAIEating(Pawn currentPawn, int newSpot, bool outing = false)
     {
-        if (newSpot >= 55)
-            return false; 
+        //if (newSpot >= 55)
+        //    return false;
 
         List<Pawn> pawnsToCheck= new List<Pawn>();
         pawnsToCheck.AddRange(GameController.instance.AIPawns);
@@ -625,7 +640,7 @@ public class Gameplay : MonoBehaviour
 
         foreach (Pawn p in pawnsToCheck)
         {
-            if (p.SpotIfFromPlayer == newSpot)
+            if (p.SpotIfFromPlayer == newSpot && p.Spot != 59)
             {
                 if (!outing)
                 {
@@ -759,7 +774,7 @@ public class Gameplay : MonoBehaviour
     
     private string GameOverTextTranslation(string color)
     {
-        switch (GameController.instance.upperLeftColor)
+        switch (color)
         {
             case "red":
                 return "crveni";
@@ -906,7 +921,7 @@ public class Gameplay : MonoBehaviour
 
                 pawnOneButton.enabled = true;
             }
-            
+
             if (GameController.instance.controlledPawns[1].Out && GameController.instance.controlledPawns[1].Spot == 0)
             {
                 if (!GameController.instance.controlledPawns[0].Out)
@@ -944,7 +959,7 @@ public class Gameplay : MonoBehaviour
             }
         }
 
-        if (GameController.instance.controlledPawns[0].Out && 
+        if (GameController.instance.controlledPawns[0].Out &&
            (GameController.instance.controlledPawns[0].Spot + lastRolledValue == GameController.instance.controlledPawns[1].Spot ||
             GameController.instance.controlledPawns[0].Spot + lastRolledValue == GameController.instance.controlledPawns[2].Spot ||
             GameController.instance.controlledPawns[0].Spot + lastRolledValue == GameController.instance.controlledPawns[3].Spot))
@@ -983,7 +998,7 @@ public class Gameplay : MonoBehaviour
             }
         }
 
-        //no avaiable move
+        ////no avaiable move
         allowPlay = false;
         StartCoroutine(this.AITurn());
     }
