@@ -46,15 +46,9 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
-        using (StreamReader sr = new StreamReader("optionValues.txt"))
-        {
-            string line = sr.ReadLine();
-            allVolumeMultiplier = float.Parse(line.Split(':')[1]);
-            line = sr.ReadLine();
-            backgroundVolume = float.Parse(line.Split(':')[1]);
-            line = sr.ReadLine();
-            effectsVolume = float.Parse(line.Split(':')[1]);
-        }
+        allVolumeMultiplier = PlayerPrefs.GetFloat("allSoundsVolume");
+        backgroundVolume = PlayerPrefs.GetFloat("backgroundVolume");
+        effectsVolume = PlayerPrefs.GetFloat("effectsVolume");
 
         diceRollAudioSource = AddAudio(diceRollAudioClip, false, false, effectsVolume * allVolumeMultiplier);
         inHouseAudioSource = AddAudio(inHouseAudioClip, false, false, effectsVolume * allVolumeMultiplier);
