@@ -809,6 +809,18 @@ public class Gameplay : MonoBehaviour
         if (GameController.instance.lastScene != 1)
         {
             historyText.text = GameController.instance.history;
+
+            GameController.instance.DeserializeGameState();
+
+            pawnOne.transform.position = GameController.instance.controlledPawns[0].Position;
+            pawnTwo.transform.position = GameController.instance.controlledPawns[1].Position;
+            pawnThree.transform.position = GameController.instance.controlledPawns[2].Position;
+            pawnFour.transform.position = GameController.instance.controlledPawns[3].Position;
+
+            for (int i = 0; i < 12; i++)
+            {
+                AIPawns[i].transform.position = GameController.instance.AIPawns[i].Position;
+            }
         }
         else
         {
@@ -816,9 +828,7 @@ public class Gameplay : MonoBehaviour
                                 "\nIzabrana težina: " + GameController.instance.gameDifficultyTranslation + "\n";
             GameController.instance.history = historyText.text;
 
-            this.SetColors();
-
-            this.SetButtonListeners();
+            
 
             GameController.instance.SetPawns((Vector2)pawnOne.transform.position, (Vector2)pawnTwo.transform.position,
                                              (Vector2)pawnThree.transform.position, (Vector2)pawnFour.transform.position);
@@ -833,14 +843,18 @@ public class Gameplay : MonoBehaviour
             }
 
             GameController.instance.SetAIPawns(positions);
-
-            this.SetPawnNumbers();
-
-            pawnOneButton.enabled = false;
-            pawnTwoButton.enabled = false;
-            pawnThreeButton.enabled = false;
-            pawnFourButton.enabled = false;
         }
+
+        this.SetButtonListeners();
+
+        this.SetColors();
+
+        this.SetPawnNumbers();
+
+        pawnOneButton.enabled = false;
+        pawnTwoButton.enabled = false;
+        pawnThreeButton.enabled = false;
+        pawnFourButton.enabled = false;
 
         GameController.instance.lastScene = SceneManager.GetActiveScene().buildIndex;
 
@@ -1181,15 +1195,18 @@ public class Gameplay : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
-    //TODO: make sure game state is saved
     public void OptionsMenu()
     {
+        GameController.instance.SerializeGameState();
+
         AudioManager.instance.PlayButtonPressedSound();
         SceneManager.LoadScene(4);
     }
 
     public void HelpMenu()
     {
+        GameController.instance.SerializeGameState();
+
         AudioManager.instance.PlayButtonPressedSound();
         SceneManager.LoadScene(5);
     }

@@ -1,18 +1,30 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class Pawn
 {
+    [SerializeField]
     public Sprite typeSprite; //heart, diamond, leaf, clover
-    public int Number { get; set; } //1, 2, 3, 4
+    [SerializeField]
+    public int Number { get; set; } //1, 2, 3, 4.
+    [SerializeField]
     public bool Out { get; set; }
+    [SerializeField]
     public int StartNumOfLives { get; set; }
+    [SerializeField]
     public int NumOfLivesLeft { get; set; } // depends on difficulty, if == 0 -> out = false
+    [SerializeField]
     public string Color { get; set; }
+    [SerializeField]
     public Vector2 StartPosition { get; set; }
+    [SerializeField]
     public Vector2 Position { get; set; }
+    [SerializeField]
     public int Spot { get; set; }
+    [SerializeField]
     public int SpotIfFromPlayer { get; set; }
 
     internal void OutedPawn(float x, float y)
