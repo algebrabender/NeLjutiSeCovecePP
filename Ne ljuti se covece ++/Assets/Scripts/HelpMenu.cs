@@ -11,7 +11,7 @@ public class HelpMenu : MonoBehaviour
 {
     void Start()
     {
-        
+        GameController.instance.lastScene = SceneManager.GetActiveScene().buildIndex;
     }
 
     void Update()

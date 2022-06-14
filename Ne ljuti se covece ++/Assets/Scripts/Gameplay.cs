@@ -168,10 +168,10 @@ public class Gameplay : MonoBehaviour
                     historyText.text += "Kockica je pala na: " + rolledNumber + "\n";
                     historyText.text += "Pawn number: " + pawnNumber + " i: " + i + " index: " + (pawnNumber + (i * 4)) + "\n";
                     historyText.text += "----------------------------------------\n";
+                    GameController.instance.history = historyText.text;
 
                     pawnNumber = Random.Range(0, 4);
                     rolledNumber = Random.Range(1, 7);
-   
                 }
                 else
                 {
@@ -235,7 +235,7 @@ public class Gameplay : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("just this");   
+                    AudioManager.instance.PlayInHouseSound();  
                 }
 
                 float temp;
@@ -266,6 +266,7 @@ public class Gameplay : MonoBehaviour
                 historyText.text += "Kockica je pala na: " + rolledNumber + "\n";
                 historyText.text += "Pawn number: " + pawnNumber + " i: " + i + " index: " + (pawnNumber + (i * 4)) + "\n";
                 historyText.text += "----------------------------------------\n";
+                GameController.instance.history = historyText.text;
 
                 pawnNumber = Random.Range(0, 4);
                 rolledNumber = Random.Range(1, 7);
@@ -567,6 +568,8 @@ public class Gameplay : MonoBehaviour
         {
             if (p.SpotIfFromPlayer == newSpot)
             {
+                AudioManager.instance.PlayEatingSound();
+
                 if (!outing)
                 {
                     if (p.UpdateLives()) //eaten
@@ -642,6 +645,8 @@ public class Gameplay : MonoBehaviour
         {
             if (p.SpotIfFromPlayer == newSpot && p.Spot != 59)
             {
+                AudioManager.instance.PlayEatingSound();
+
                 if (!outing)
                 {
                     if (p.UpdateLives()) //eaten
@@ -683,6 +688,8 @@ public class Gameplay : MonoBehaviour
         
         if (GameController.instance.controlledPawns[0].Spot == newSpot)
         {
+            AudioManager.instance.PlayEatingSound();
+
             if (!outing)
             {
                 if (GameController.instance.controlledPawns[0].UpdateLives())
@@ -705,6 +712,8 @@ public class Gameplay : MonoBehaviour
 
         if (GameController.instance.controlledPawns[1].Spot == newSpot)
         {
+            AudioManager.instance.PlayEatingSound();
+
             if (!outing)
             {
                 if (GameController.instance.controlledPawns[1].UpdateLives())
@@ -727,6 +736,8 @@ public class Gameplay : MonoBehaviour
 
         if (GameController.instance.controlledPawns[2].Spot == newSpot)
         {
+            AudioManager.instance.PlayEatingSound();
+
             if (!outing)
             {
                 if (GameController.instance.controlledPawns[2].UpdateLives())
@@ -749,6 +760,8 @@ public class Gameplay : MonoBehaviour
 
         if (GameController.instance.controlledPawns[3].Spot == newSpot)
         {
+            AudioManager.instance.PlayEatingSound();
+
             if (!outing)
             {
                 if (GameController.instance.controlledPawns[3].UpdateLives())
@@ -793,35 +806,44 @@ public class Gameplay : MonoBehaviour
     #region Methodes
     void Start()
     {
-        GameController.instance.lastScene = SceneManager.GetActiveScene().buildIndex;
-
-        historyText.text = "Izabrana boja: " + GameController.instance.playerColorTranslation +
-                            "\nIzabrana težina: " + GameController.instance.gameDifficultyTranslation + "\n";
-
-        this.SetColors();
-
-        this.SetButtonListeners();
-
-        GameController.instance.SetPawns((Vector2)pawnOne.transform.position, (Vector2)pawnTwo.transform.position, 
-                                         (Vector2)pawnThree.transform.position, (Vector2)pawnFour.transform.position);
-
-        Vector2[] positions = new Vector2[12];
-
-        for (int i = 0; i < 4; i++)
+        if (GameController.instance.lastScene != 1)
         {
-            positions[i] =(Vector2)AIPawns[i].transform.position;
-            positions[i + 4] = (Vector2)AIPawns[i + 4].transform.position;
-            positions[i + 8] = (Vector2)AIPawns[i + 8].transform.position;
+            historyText.text = GameController.instance.history;
+        }
+        else
+        {
+            historyText.text = "Izabrana boja: " + GameController.instance.playerColorTranslation +
+                                "\nIzabrana težina: " + GameController.instance.gameDifficultyTranslation + "\n";
+            GameController.instance.history = historyText.text;
+
+            this.SetColors();
+
+            this.SetButtonListeners();
+
+            GameController.instance.SetPawns((Vector2)pawnOne.transform.position, (Vector2)pawnTwo.transform.position,
+                                             (Vector2)pawnThree.transform.position, (Vector2)pawnFour.transform.position);
+
+            Vector2[] positions = new Vector2[12];
+
+            for (int i = 0; i < 4; i++)
+            {
+                positions[i] = (Vector2)AIPawns[i].transform.position;
+                positions[i + 4] = (Vector2)AIPawns[i + 4].transform.position;
+                positions[i + 8] = (Vector2)AIPawns[i + 8].transform.position;
+            }
+
+            GameController.instance.SetAIPawns(positions);
+
+            this.SetPawnNumbers();
+
+            pawnOneButton.enabled = false;
+            pawnTwoButton.enabled = false;
+            pawnThreeButton.enabled = false;
+            pawnFourButton.enabled = false;
         }
 
-        GameController.instance.SetAIPawns(positions);
+        GameController.instance.lastScene = SceneManager.GetActiveScene().buildIndex;
 
-        this.SetPawnNumbers();
-
-        pawnOneButton.enabled = false;
-        pawnTwoButton.enabled = false;
-        pawnThreeButton.enabled = false;
-        pawnFourButton.enabled = false;
     }
 
     void Update()
@@ -857,7 +879,15 @@ public class Gameplay : MonoBehaviour
         {
             this.GoBack();
         }
-        else if (Input.GetKeyDown((KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("rollDice", "Space"))))
+        else if (Input.GetKeyDown((KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("optionMenu", "O"))))
+        {
+            this.OptionsMenu();
+        }
+        else if (Input.GetKeyDown((KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("helpMenu", "H"))))
+        {
+            this.HelpMenu();
+        }
+        else if (Input.GetKeyDown((KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("rollDice", "D"))))
         {
             this.RollDice();
         }
@@ -1013,11 +1043,13 @@ public class Gameplay : MonoBehaviour
             this.CheckIfEating(0, true);
 
             this.DisableButtons();
+            StartCoroutine(this.AITurn());
         }
         else if (GameController.instance.controlledPawns[0].Out)
         {
             float deltaX, deltaY;
             int newSpot;
+
             this.CalculateDeltas(GameController.instance.controlledPawns[0].Spot, lastRolledValue, out deltaX, out deltaY, out newSpot);
             if (this.CheckIfEating(newSpot))
                 this.CalculateDeltas(GameController.instance.controlledPawns[0].Spot, lastRolledValue - 1, out deltaX, out deltaY, out newSpot);
@@ -1026,8 +1058,11 @@ public class Gameplay : MonoBehaviour
             GameController.instance.controlledPawns[0].UpdatePosition(deltaX, deltaY, newSpot);
 
             if (newSpot > 55)
+            {
                 GameController.instance.controlledPawns[0].Spot = 59; //in house so there is no "eating"
-
+                AudioManager.instance.PlayInHouseSound();
+            }
+            
             this.DisableButtons();
             StartCoroutine(this.AITurn());
         }
@@ -1041,11 +1076,15 @@ public class Gameplay : MonoBehaviour
             GameController.instance.controlledPawns[1].OutedPawn(pawnTwo.transform.position.x, pawnTwo.transform.position.y);
 
             this.CheckIfEating(0, true);
+
+            this.DisableButtons();
+            StartCoroutine(this.AITurn());
         }
         else if (GameController.instance.controlledPawns[1].Out)
         {
             float deltaX, deltaY;
             int newSpot;
+            
             this.CalculateDeltas(GameController.instance.controlledPawns[1].Spot, lastRolledValue, out deltaX, out deltaY, out newSpot);
             if (this.CheckIfEating(newSpot))
                 this.CalculateDeltas(GameController.instance.controlledPawns[1].Spot, lastRolledValue - 1, out deltaX, out deltaY, out newSpot);
@@ -1054,7 +1093,10 @@ public class Gameplay : MonoBehaviour
             GameController.instance.controlledPawns[1].UpdatePosition(deltaX, deltaY, newSpot);
 
             if (newSpot > 55)
+            {
                 GameController.instance.controlledPawns[1].Spot = 59; //in house so there is no "eating"
+                AudioManager.instance.PlayInHouseSound();
+            }
 
             this.DisableButtons();
             StartCoroutine(this.AITurn());
@@ -1069,11 +1111,15 @@ public class Gameplay : MonoBehaviour
             GameController.instance.controlledPawns[2].OutedPawn(pawnThree.transform.position.x, pawnThree.transform.position.y);
 
             this.CheckIfEating(0, true);
+
+            this.DisableButtons();
+            StartCoroutine(this.AITurn());
         }
         else if (GameController.instance.controlledPawns[2].Out)
         {
             float deltaX, deltaY;
             int newSpot;
+            
             this.CalculateDeltas(GameController.instance.controlledPawns[2].Spot, lastRolledValue, out deltaX, out deltaY, out newSpot);
             if (this.CheckIfEating(newSpot))
                 this.CalculateDeltas(GameController.instance.controlledPawns[2].Spot, lastRolledValue - 1, out deltaX, out deltaY, out newSpot);
@@ -1082,7 +1128,10 @@ public class Gameplay : MonoBehaviour
             GameController.instance.controlledPawns[2].UpdatePosition(deltaX, deltaY, newSpot);
 
             if (newSpot > 55)
+            {
                 GameController.instance.controlledPawns[2].Spot = 59; //in house so there is no "eating"
+                AudioManager.instance.PlayInHouseSound();
+            }
 
             this.DisableButtons();
             StartCoroutine(this.AITurn());
@@ -1097,11 +1146,15 @@ public class Gameplay : MonoBehaviour
             GameController.instance.controlledPawns[3].OutedPawn(pawnFour.transform.position.x, pawnFour.transform.position.y);
 
             this.CheckIfEating(0, true);
+
+            this.DisableButtons();
+            StartCoroutine(this.AITurn());
         }
         else if (GameController.instance.controlledPawns[3].Out)
         {
             float deltaX, deltaY;
             int newSpot;
+
             this.CalculateDeltas(GameController.instance.controlledPawns[3].Spot, lastRolledValue, out deltaX, out deltaY, out newSpot);
             if (this.CheckIfEating(newSpot))
                 this.CalculateDeltas(GameController.instance.controlledPawns[3].Spot, lastRolledValue - 1, out deltaX, out deltaY, out newSpot);
@@ -1110,7 +1163,10 @@ public class Gameplay : MonoBehaviour
             GameController.instance.controlledPawns[3].UpdatePosition(deltaX, deltaY, newSpot);
 
             if (newSpot > 55)
-                GameController.instance.controlledPawns[3].Spot = 59; //in house so there is no "eating"
+            {
+                GameController.instance.controlledPawns[0].Spot = 59; //in house so there is no "eating"
+                AudioManager.instance.PlayInHouseSound();
+            }
 
             this.DisableButtons();
             StartCoroutine(this.AITurn());

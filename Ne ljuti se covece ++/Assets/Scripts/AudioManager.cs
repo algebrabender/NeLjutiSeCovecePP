@@ -10,18 +10,16 @@ public class AudioManager : MonoBehaviour
     public AudioClip backgroundAudioClip;
     public AudioClip diceRollAudioClip;
     public AudioClip inHouseAudioClip;
-    public AudioClip winAudioClip;
+    public AudioClip gameoverAudioClip;
     public AudioClip eatAudioClip;
     public AudioClip buttonPressedAudioClip;
-    public AudioClip turnAudioClip;
 
     public static AudioSource backgroundAudioSource;
     public static AudioSource diceRollAudioSource;
     public static AudioSource inHouseAudioSource;
-    public static AudioSource winAudioSource;
+    public static AudioSource gameoverAudioSource;
     public static AudioSource eatAudioSource;
     public static AudioSource buttonPressedAudioSource;
-    public static AudioSource turnAudioSource;
 
     internal float allVolumeMultiplier = 1.0f;
     internal float backgroundVolume = 1.0f;
@@ -52,7 +50,7 @@ public class AudioManager : MonoBehaviour
 
         diceRollAudioSource = AddAudio(diceRollAudioClip, false, false, effectsVolume * allVolumeMultiplier);
         inHouseAudioSource = AddAudio(inHouseAudioClip, false, false, effectsVolume * allVolumeMultiplier);
-        winAudioSource = AddAudio(winAudioClip, false, false, effectsVolume * allVolumeMultiplier);
+        gameoverAudioSource = AddAudio(gameoverAudioClip, false, false, effectsVolume * allVolumeMultiplier);
         eatAudioSource = AddAudio(eatAudioClip, false, false, effectsVolume * allVolumeMultiplier);
         buttonPressedAudioSource = AddAudio(buttonPressedAudioClip, false, false, effectsVolume * allVolumeMultiplier);
 
@@ -64,10 +62,24 @@ public class AudioManager : MonoBehaviour
     }
 
     #region PlaySounds
-
-    internal void PlayDiceRollSound()
+    public void PlayDiceRollSound()
     {
         diceRollAudioSource.PlayDelayed(0.5f);
+    }
+
+    public void PlayInHouseSound()
+    {
+        inHouseAudioSource.Play();
+    }
+
+    public void PlayEatingSound()
+    {
+        eatAudioSource.Play();
+    }
+
+    public void PlayGameoverSound()
+    {
+        gameoverAudioSource.Play();
     }
 
     public void PlayButtonPressedSound()
@@ -75,6 +87,9 @@ public class AudioManager : MonoBehaviour
         buttonPressedAudioSource.Play();
     }
 
+    #endregion
+
+    #region SetVolume
     public void SetAllSoundsVolume(float multiplier)
     {
         allVolumeMultiplier = multiplier;
@@ -93,7 +108,7 @@ public class AudioManager : MonoBehaviour
         effectsVolume = volume;
         diceRollAudioSource.volume = volume * allVolumeMultiplier;
         inHouseAudioSource.volume = volume * allVolumeMultiplier;
-        winAudioSource.volume = volume * allVolumeMultiplier;
+        gameoverAudioSource.volume = volume * allVolumeMultiplier;
         eatAudioSource.volume = volume * allVolumeMultiplier;
         buttonPressedAudioSource.volume = volume * allVolumeMultiplier;
     }

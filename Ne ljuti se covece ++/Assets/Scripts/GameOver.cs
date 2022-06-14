@@ -16,6 +16,8 @@ public class GameOver : MonoBehaviour
 
     void Start()
     {
+        GameController.instance.lastScene = SceneManager.GetActiveScene().buildIndex;
+
         newGameButton.onClick.RemoveAllListeners();
         newGameButton.onClick.AddListener(NewGame);
         newGameButton.onClick.AddListener(AudioManager.instance.PlayButtonPressedSound);
@@ -24,7 +26,21 @@ public class GameOver : MonoBehaviour
         exitButton.onClick.AddListener(Exit);
         exitButton.onClick.AddListener(AudioManager.instance.PlayButtonPressedSound);
 
-        gameOverText.text = "<b>" + GameController.instance.winnerText + "!</b>";    
+        gameOverText.text = "<b>" + GameController.instance.winnerText + "!</b>";
+
+        AudioManager.instance.PlayGameoverSound();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown((KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("goBack", "Escape"))))
+        {
+            this.Exit();
+        }
+        else if (Input.GetKeyDown((KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("newGame", "Space"))))
+        {
+            this.NewGame();
+        }
     }
 
     public void NewGame()

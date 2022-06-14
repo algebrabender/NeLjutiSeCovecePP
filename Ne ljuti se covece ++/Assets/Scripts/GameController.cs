@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour
     internal string playerColorTranslation = "";
     internal string gameDifficultyTranslation = "";
     internal string winnerText = "";
+    internal string history = "";
 
     internal List<Pawn> controlledPawns = new List<Pawn>(4);
     internal List<Pawn> AIPawns = new List<Pawn>(12);
@@ -181,5 +182,15 @@ public class GameController : MonoBehaviour
             j+=4;
         }
         
+    }
+
+    internal void SerializeGameState()
+    {
+
+    }
+
+    internal void DeserializeGameState()
+    {
+
     }
 }

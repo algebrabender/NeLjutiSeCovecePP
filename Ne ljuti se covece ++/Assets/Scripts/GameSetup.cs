@@ -79,7 +79,11 @@ public class GameSetup : MonoBehaviour
         {
             this.HelpMenu();
         }
-        else if (Input.GetKeyDown((KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("newGame", "Space"))))
+        else if (Input.GetKeyDown(KeyCode.Q))
+        {
+            this.QuickGame();
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
         {
             if (GameController.instance.playerColor != "" && GameController.instance.gameDifficulty != "")
                 this.StartGame();
@@ -100,15 +104,15 @@ public class GameSetup : MonoBehaviour
         {
             this.SetColor("yellow", "žuto");
         }
-        else if (Input.GetKeyDown(KeyCode.Keypad1) || Input.GetKeyDown(KeyCode.Alpha1))
+        else if (Input.GetKeyDown(KeyCode.E))
         {
             this.SetDifficulty("easy", "lako");
         }
-        else if (Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.Alpha2))
+        else if (Input.GetKeyDown(KeyCode.M))
         {
             this.SetDifficulty("medium", "srednje");
         }
-        else if (Input.GetKeyDown(KeyCode.Keypad3) || Input.GetKeyDown(KeyCode.Alpha3))
+        else if (Input.GetKeyDown(KeyCode.H))
         {
             this.SetDifficulty("hard", "teško");
         }
