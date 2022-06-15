@@ -16,19 +16,19 @@ public class MainMenu : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown((KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("newGame", "Space"))))
+        if (Input.GetKeyDown(GameController.instance.keyCodes["newGame"]))
         {
             this.NewGame();
         }
-        else if (Input.GetKeyDown((KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("optionMenu", "O"))))
+        else if (Input.GetKeyDown(GameController.instance.keyCodes["optionMenu"]))
         {
             this.OptionsMenu();
         }
-        else if (Input.GetKeyDown((KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("helpMenu", "H"))))
+        else if (Input.GetKeyDown(GameController.instance.keyCodes["helpMenu"]))
         {
             this.HelpMenu();
         }
-        else if (Input.GetKeyDown((KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("goBack", "Escape"))))
+        else if (Input.GetKeyDown(GameController.instance.keyCodes["goBack"]))
         {
             this.Exit();
         }

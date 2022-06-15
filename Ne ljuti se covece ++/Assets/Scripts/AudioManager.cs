@@ -64,7 +64,7 @@ public class AudioManager : MonoBehaviour
     #region PlaySounds
     public void PlayDiceRollSound()
     {
-        diceRollAudioSource.PlayDelayed(0.5f);
+        diceRollAudioSource.Play();
     }
 
     public void PlayInHouseSound()

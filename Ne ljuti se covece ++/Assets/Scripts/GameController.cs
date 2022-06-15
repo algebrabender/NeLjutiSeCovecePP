@@ -38,12 +38,26 @@ public class GameController : MonoBehaviour
     public Sprite leafSprite;
     public Sprite diamondSprite;
 
+    internal Dictionary<string, KeyCode> keyCodes = new Dictionary<string, KeyCode>();
 
     void Awake()
     {
         instance = this;
         
         DontDestroyOnLoad(this.gameObject);
+    }
+
+    void Start()
+    {
+        keyCodes.Add("pawnOne", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("pawnOne", "Alpha1")));
+        keyCodes.Add("pawnTwo", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("pawnTwo", "Alpha2")));
+        keyCodes.Add("pawnThree", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("pawnThree", "Alpha3")));
+        keyCodes.Add("pawnFour", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("pawnFour", "Alpha4")));
+        keyCodes.Add("rollDice", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("rollDice", "D")));
+        keyCodes.Add("goBack", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("goBack", "Escape")));
+        keyCodes.Add("newGame", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("newGame", "Space")));
+        keyCodes.Add("optionMenu", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("optionMenu", "O")));
+        keyCodes.Add("helpMenu", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("helpMenu", "H")));
     }
 
     internal void SetPawns(Vector2 positionOne, Vector2 positionTwo, Vector2 positionThree, Vector2 positionFour)
