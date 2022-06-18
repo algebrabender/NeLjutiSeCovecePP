@@ -83,6 +83,8 @@ public class OptionsMenu : MonoBehaviour
         {
             AudioManager.instance.SetAllSoundsVolume(allSoundsVolumeSlider.value);    
         }
+        AudioManager.instance.SetBackgroundVolume(backgroundVolumeSlider.value);
+        AudioManager.instance.SetEffectsVolume(effectsVolumeSlider.value);
     }
 
     public void SetBackgroundVolume()

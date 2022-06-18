@@ -210,7 +210,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1558065856}
         m_TargetAssemblyTypeName: Gameplay, Assembly-CSharp
-        m_MethodName: PawnTry
+        m_MethodName: ControlledPawn
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2043,7 +2043,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1558065856}
         m_TargetAssemblyTypeName: Gameplay, Assembly-CSharp
-        m_MethodName: PawnTry
+        m_MethodName: ControlledPawn
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3483,7 +3483,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1558065856}
         m_TargetAssemblyTypeName: Gameplay, Assembly-CSharp
-        m_MethodName: PawnTry
+        m_MethodName: ControlledPawn
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3977,7 +3977,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Rolled number goes here
+  m_Text: 
 --- !u!222 &1334733677
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6283,7 +6283,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1558065856}
         m_TargetAssemblyTypeName: Gameplay, Assembly-CSharp
-        m_MethodName: PawnTry
+        m_MethodName: ControlledPawn
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

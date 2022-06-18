@@ -115,6 +115,7 @@ public class Gameplay : MonoBehaviour
         int pawnNumber = Random.Range(0, 4);
         int outedPawn = -1;
         List<int> prevPawnNums = new List<int>();
+        string color = "";
 
         for (int i = 0; i < 3; i++)
         {
@@ -126,16 +127,19 @@ public class Gameplay : MonoBehaviour
                 {
                     newX = 100.38f;
                     newY = 366.72f;
+                    color = GameOverTextTranslation(GameController.instance.upperLeftColor);
                 }
                 else if (i == 1) //upper right
                 {
                     newX = 384.25f;
                     newY = 569.27f;
+                    color = GameOverTextTranslation(GameController.instance.upperRightColor);
                 }
                 else //lower right
                 {
                     newX = 587.21f;
                     newY = 285.94f;
+                    color = GameOverTextTranslation(GameController.instance.lowerRightColor);
                 }
 
                 bool thereIsOuted = false;
@@ -167,7 +171,8 @@ public class Gameplay : MonoBehaviour
                     this.CheckIfAIEating(GameController.instance.AIPawns[pawnNumber + (i * 4)], GameController.instance.AIPawns[pawnNumber + (i * 4)].SpotIfFromPlayer, true);
 
                     historyText.text += "Kockica je pala na: " + rolledNumber + "\n";
-                    historyText.text += "Pawn number: " + pawnNumber + " i: " + i + " index: " + (pawnNumber + (i * 4)) + "\n";
+                    historyText.text += color + " je pomerio piona " + (pawnNumber + 1) + "\n";
+                    //historyText.text += "Pawn number: " + pawnNumber + " i: " + i + " index: " + (pawnNumber + (i * 4)) + "\n";
                     historyText.text += "----------------------------------------\n";
                     GameController.instance.history = historyText.text;
 
@@ -245,17 +250,20 @@ public class Gameplay : MonoBehaviour
                     temp = -deltaX;
                     deltaX = deltaY;
                     deltaY = temp;
+                    color = GameOverTextTranslation(GameController.instance.upperLeftColor);
                 }
                 else if (i == 1)
                 {
                     deltaX *= -1;
                     deltaY *= -1;
+                    color = GameOverTextTranslation(GameController.instance.upperRightColor);
                 }
                 else
                 {
                     temp = deltaX;
                     deltaX = -deltaY;
                     deltaY = temp;
+                    color = GameOverTextTranslation(GameController.instance.lowerRightColor);
                 }
 
                 if (deltaX == 0 && deltaY == 0)
@@ -265,7 +273,8 @@ public class Gameplay : MonoBehaviour
                 GameController.instance.AIPawns[pawnNumber + (i * 4)].UpdatePosition(deltaX, deltaY, newSpot, rolledNumber);
 
                 historyText.text += "Kockica je pala na: " + rolledNumber + "\n";
-                historyText.text += "Pawn number: " + pawnNumber + " i: " + i + " index: " + (pawnNumber + (i * 4)) + "\n";
+                historyText.text += color + " je pomerio piona " + (pawnNumber + 1) + "\n";
+                //historyText.text += "Pawn number: " + pawnNumber + " i: " + i + " index: " + (pawnNumber + (i * 4)) + "\n";
                 historyText.text += "----------------------------------------\n";
                 GameController.instance.history = historyText.text;
 
@@ -1045,6 +1054,7 @@ public class Gameplay : MonoBehaviour
             if (b.enabled)
             {
                 allowPlay = true;
+                rollDiceButton.enabled = false;
                 return;
             }
         }
@@ -1222,8 +1232,25 @@ public class Gameplay : MonoBehaviour
     {
         if (!GameController.instance.controlledPawns[pawn].Out && lastRolledValue == 6)
         {
-            pawnOne.transform.position = new Vector3(pawnOne.transform.position.x + 102.6f, pawnOne.transform.position.y - 19.54f, pawnOne.transform.position.z);
-            GameController.instance.controlledPawns[pawn].OutedPawn(pawnOne.transform.position.x, pawnOne.transform.position.y);
+            switch (pawn)
+            {
+                case 0:
+                    pawnOne.transform.position = new Vector3(pawnOne.transform.position.x + 102.6f, pawnOne.transform.position.y - 19.54f, pawnOne.transform.position.z);
+                    GameController.instance.controlledPawns[pawn].OutedPawn(pawnOne.transform.position.x, pawnOne.transform.position.y);
+                    break;
+                case 1:
+                    pawnTwo.transform.position = new Vector3(pawnTwo.transform.position.x + 174.73f, pawnTwo.transform.position.y - 19.54f, pawnTwo.transform.position.z);
+                    GameController.instance.controlledPawns[1].OutedPawn(pawnTwo.transform.position.x, pawnTwo.transform.position.y);
+                    break;
+                case 2:
+                    pawnThree.transform.position = new Vector3(pawnThree.transform.position.x + 174.73f, pawnThree.transform.position.y - 95.87f, pawnThree.transform.position.z);
+                    GameController.instance.controlledPawns[2].OutedPawn(pawnThree.transform.position.x, pawnThree.transform.position.y);
+                    break;
+                case 3:
+                    pawnFour.transform.position = new Vector3(pawnFour.transform.position.x + 102.6f, pawnFour.transform.position.y - 95.87f, pawnFour.transform.position.z);
+                    GameController.instance.controlledPawns[3].OutedPawn(pawnFour.transform.position.x, pawnFour.transform.position.y);
+                    break;
+            }
 
             this.CheckIfEating(0, true);
 

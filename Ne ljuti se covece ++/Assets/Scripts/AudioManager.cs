@@ -93,8 +93,8 @@ public class AudioManager : MonoBehaviour
     public void SetAllSoundsVolume(float multiplier)
     {
         allVolumeMultiplier = multiplier;
-        SetBackgroundVolume(backgroundAudioSource.volume);
-        SetEffectsVolume(diceRollAudioSource.volume);
+        //SetBackgroundVolume(backgroundAudioSource.volume);
+        //SetEffectsVolume(diceRollAudioSource.volume);
     }
 
     public void SetBackgroundVolume(float volume)

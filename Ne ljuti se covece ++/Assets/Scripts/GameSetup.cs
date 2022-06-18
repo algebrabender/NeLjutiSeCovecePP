@@ -122,7 +122,28 @@ public class GameSetup : MonoBehaviour
     {
         GameController.instance.playerColor = color;
         GameController.instance.playerColorTranslation = colorTranslation;
-        
+
+        ColorBlock colorBlock = startGameButton.colors;
+
+        switch (color)
+        {
+            case "red":
+                colorBlock.normalColor = new Color(241f / 255f, 87f / 255f, 87f / 255f);
+                break;
+            case "blue":
+                colorBlock.normalColor = new Color(93f / 255f, 102f / 255f, 255f / 255f);
+                break;
+            case "green":
+                colorBlock.normalColor = new Color(53f / 255f, 204f / 255f, 97f / 255f);
+                break;
+            case "yellow":
+                colorBlock.normalColor = new Color(255f / 255f, 238f / 255f, 78f / 255f);
+                break;
+        }
+
+        //startGameButton.colors = colorBlock;
+        startGameButton.image.color = colorBlock.normalColor;
+
         if (GameController.instance.gameDifficulty != "")
             startGameButton.interactable = true;
     }
