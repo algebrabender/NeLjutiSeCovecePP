@@ -124,22 +124,22 @@ public class Gameplay : MonoBehaviour
                 float newY;
                 if (i == 0) //upper left
                 {
-                    newX = 169.0f;
-                    newY = 611.0f;
+                    newX = -405.0f;
+                    newY = 66.0f;
                     color = GameOverTextTranslation(GameController.instance.upperLeftColor);
                     spotToCheck = 14;
                 }
                 else if (i == 1) //upper right
                 {
-                    newX = 640.0f; //384.25f * 1.66f;
-                    newY = 947.0f; //569.5f * 1.65f;
+                    newX = 66.0f; //384.25f * 1.66f;
+                    newY = 405.0f; //569.5f * 1.65f;
                     color = GameOverTextTranslation(GameController.instance.upperRightColor);
                     spotToCheck = 28;
                 }
                 else //lower right
                 {
-                    newX = 972.0f; //587.21f * 1.65f;
-                    newY = 475.0f; //285.94f * 1.65f;
+                    newX = 405.0f; //587.21f * 1.65f;
+                    newY = -66.0f; //285.94f * 1.65f;
                     color = GameOverTextTranslation(GameController.instance.lowerRightColor);
                     spotToCheck = 42;
                 }
@@ -161,7 +161,7 @@ public class Gameplay : MonoBehaviour
                 {
                     AudioManager.instance.PlayDiceRollSound();
 
-                    AIPawns[pawnNumber + (i * 4)].transform.position = new Vector3(newX, newY, AIPawns[pawnNumber + (i * 4)].transform.position.z);
+                    AIPawns[pawnNumber + (i * 4)].transform.localPosition = new Vector3(newX, newY, AIPawns[pawnNumber + (i * 4)].transform.localPosition.z);
                     GameController.instance.AIPawns[pawnNumber + (i * 4)].OutedPawn(newX, newY);
 
                     GameController.instance.AIPawns[pawnNumber + (i * 4)].SpotIfFromPlayer = spotToCheck;
@@ -273,7 +273,7 @@ public class Gameplay : MonoBehaviour
                     continue;
                 }
 
-                AIPawns[pawnNumber + (i * 4)].transform.position = new Vector3(AIPawns[pawnNumber + (i * 4)].transform.position.x + deltaX, AIPawns[pawnNumber + (i * 4)].transform.position.y + deltaY, AIPawns[pawnNumber + (i * 4)].transform.position.z);
+                AIPawns[pawnNumber + (i * 4)].transform.localPosition = new Vector3(AIPawns[pawnNumber + (i * 4)].transform.localPosition.x + deltaX, AIPawns[pawnNumber + (i * 4)].transform.localPosition.y + deltaY, AIPawns[pawnNumber + (i * 4)].transform.localPosition.z);
                 GameController.instance.AIPawns[pawnNumber + (i * 4)].UpdatePosition(deltaX, deltaY, newSpot, rolledNumber);
 
                 //if (newSpot > 54)
@@ -335,7 +335,7 @@ public class Gameplay : MonoBehaviour
     
     private void CalculateDeltas(int currentSpot, int rolledValue, out float deltaX, out float deltaY, out int newSpot, int ai = 3)
     {
-        deltaX = 66.5f;
+        deltaX = 66.0f;
         deltaY = 67.5f;
 
         newSpot = currentSpot + rolledValue;
@@ -598,7 +598,7 @@ public class Gameplay : MonoBehaviour
                     if (p.UpdateLives()) //eaten
                     {
                         int index = GameController.instance.AIPawns.IndexOf(p);
-                        AIPawns[index].transform.position = new Vector3(p.Position.x, p.Position.y, 0.0f);
+                        AIPawns[index].transform.localPosition = new Vector3(p.Position.x, p.Position.y, 0.0f);
                         //if (index / 4 == 0)
                         //    p.SpotIfFromPlayer = 14;
                         //else if (index / 4 == 1)
@@ -617,7 +617,7 @@ public class Gameplay : MonoBehaviour
                         if (p.UpdateLives())
                             break;
                     int index = GameController.instance.AIPawns.IndexOf(p);
-                    AIPawns[index].transform.position = new Vector3(p.Position.x, p.Position.y, 0.0f);
+                    AIPawns[index].transform.localPosition = new Vector3(p.Position.x, p.Position.y, 0.0f);
                     //if (index / 4 == 0)
                     //    p.SpotIfFromPlayer = 14;
                     //else if (index / 4 == 1)
@@ -675,7 +675,7 @@ public class Gameplay : MonoBehaviour
                     if (p.UpdateLives()) //eaten
                     {
                         index = GameController.instance.AIPawns.IndexOf(p);
-                        AIPawns[index].transform.position = new Vector3(p.Position.x, p.Position.y, 0.0f);
+                        AIPawns[index].transform.localPosition = new Vector3(p.Position.x, p.Position.y, 0.0f);
 
                         //if (index / 4 == 0)
                         //    p.SpotIfFromPlayer = 14;
@@ -695,7 +695,7 @@ public class Gameplay : MonoBehaviour
                         if (p.UpdateLives())
                             break;
                     index = GameController.instance.AIPawns.IndexOf(p);
-                    AIPawns[index].transform.position = new Vector3(p.Position.x, p.Position.y, 0.0f);
+                    AIPawns[index].transform.localPosition = new Vector3(p.Position.x, p.Position.y, 0.0f);
 
                     //if (index / 4 == 0)
                     //    p.SpotIfFromPlayer = 14;
@@ -717,7 +717,7 @@ public class Gameplay : MonoBehaviour
             {
                 if (GameController.instance.controlledPawns[0].UpdateLives())
                 {
-                    pawnOne.transform.position = new Vector3(GameController.instance.controlledPawns[0].Position.x, GameController.instance.controlledPawns[0].Position.y, 0.0f);
+                    pawnOne.transform.localPosition = new Vector3(GameController.instance.controlledPawns[0].Position.x, GameController.instance.controlledPawns[0].Position.y, 0.0f);
                     return false;
                 }
                 else
@@ -728,7 +728,7 @@ public class Gameplay : MonoBehaviour
                 while (GameController.instance.controlledPawns[0].NumOfLivesLeft > 0)
                     if (GameController.instance.controlledPawns[0].UpdateLives())
                         break;
-                pawnOne.transform.position = new Vector3(GameController.instance.controlledPawns[0].Position.x, GameController.instance.controlledPawns[0].Position.y, 0.0f);
+                pawnOne.transform.localPosition = new Vector3(GameController.instance.controlledPawns[0].Position.x, GameController.instance.controlledPawns[0].Position.y, 0.0f);
                 return false;
             }
         }
@@ -741,7 +741,7 @@ public class Gameplay : MonoBehaviour
             {
                 if (GameController.instance.controlledPawns[1].UpdateLives())
                 {
-                    pawnTwo.transform.position = new Vector3(GameController.instance.controlledPawns[1].Position.x, GameController.instance.controlledPawns[1].Position.y, 0.0f);
+                    pawnTwo.transform.localPosition = new Vector3(GameController.instance.controlledPawns[1].Position.x, GameController.instance.controlledPawns[1].Position.y, 0.0f);
                     return false;
                 }
                 else
@@ -752,7 +752,7 @@ public class Gameplay : MonoBehaviour
                 while (GameController.instance.controlledPawns[1].NumOfLivesLeft > 0)
                     if (GameController.instance.controlledPawns[1].UpdateLives())
                         break;
-                pawnTwo.transform.position = new Vector3(GameController.instance.controlledPawns[1].Position.x, GameController.instance.controlledPawns[1].Position.y, 0.0f);
+                pawnTwo.transform.localPosition = new Vector3(GameController.instance.controlledPawns[1].Position.x, GameController.instance.controlledPawns[1].Position.y, 0.0f);
                 return false;
             }
         }
@@ -765,7 +765,7 @@ public class Gameplay : MonoBehaviour
             {
                 if (GameController.instance.controlledPawns[2].UpdateLives())
                 {
-                    pawnThree.transform.position = new Vector3(GameController.instance.controlledPawns[2].Position.x, GameController.instance.controlledPawns[2].Position.y, 0.0f);
+                    pawnThree.transform.localPosition = new Vector3(GameController.instance.controlledPawns[2].Position.x, GameController.instance.controlledPawns[2].Position.y, 0.0f);
                     return false;
                 }
                 else
@@ -776,7 +776,7 @@ public class Gameplay : MonoBehaviour
                 while (GameController.instance.controlledPawns[2].NumOfLivesLeft > 0)
                     if (GameController.instance.controlledPawns[2].UpdateLives())
                         break;
-                pawnThree.transform.position = new Vector3(GameController.instance.controlledPawns[2].Position.x, GameController.instance.controlledPawns[2].Position.y, 0.0f);
+                pawnThree.transform.localPosition = new Vector3(GameController.instance.controlledPawns[2].Position.x, GameController.instance.controlledPawns[2].Position.y, 0.0f);
                 return false;
             }
         }
@@ -789,7 +789,7 @@ public class Gameplay : MonoBehaviour
             {
                 if (GameController.instance.controlledPawns[3].UpdateLives())
                 {
-                    pawnFour.transform.position = new Vector3(GameController.instance.controlledPawns[3].Position.x, GameController.instance.controlledPawns[3].Position.y, 0.0f);
+                    pawnFour.transform.localPosition = new Vector3(GameController.instance.controlledPawns[3].Position.x, GameController.instance.controlledPawns[3].Position.y, 0.0f);
                     return false;
                 }
                 else
@@ -800,7 +800,7 @@ public class Gameplay : MonoBehaviour
                 while (GameController.instance.controlledPawns[3].NumOfLivesLeft > 0)
                     if (GameController.instance.controlledPawns[3].UpdateLives())
                         break;
-                pawnFour.transform.position = new Vector3(GameController.instance.controlledPawns[3].Position.x, GameController.instance.controlledPawns[3].Position.y, 0.0f);
+                pawnFour.transform.localPosition = new Vector3(GameController.instance.controlledPawns[3].Position.x, GameController.instance.controlledPawns[3].Position.y, 0.0f);
                 return false;
             }
         }
@@ -835,14 +835,14 @@ public class Gameplay : MonoBehaviour
 
             GameController.instance.DeserializeGameState();
 
-            pawnOne.transform.position = GameController.instance.controlledPawns[0].Position;
-            pawnTwo.transform.position = GameController.instance.controlledPawns[1].Position;
-            pawnThree.transform.position = GameController.instance.controlledPawns[2].Position;
-            pawnFour.transform.position = GameController.instance.controlledPawns[3].Position;
+            pawnOne.transform.localPosition = GameController.instance.controlledPawns[0].Position;
+            pawnTwo.transform.localPosition = GameController.instance.controlledPawns[1].Position;
+            pawnThree.transform.localPosition = GameController.instance.controlledPawns[2].Position;
+            pawnFour.transform.localPosition = GameController.instance.controlledPawns[3].Position;
 
             for (int i = 0; i < 12; i++)
             {
-                AIPawns[i].transform.position = GameController.instance.AIPawns[i].Position;
+                AIPawns[i].transform.localPosition = GameController.instance.AIPawns[i].Position;
             }
         }
         else
@@ -853,16 +853,16 @@ public class Gameplay : MonoBehaviour
 
             
 
-            GameController.instance.SetPawns((Vector2)pawnOne.transform.position, (Vector2)pawnTwo.transform.position,
-                                             (Vector2)pawnThree.transform.position, (Vector2)pawnFour.transform.position);
+            GameController.instance.SetPawns((Vector2)pawnOne.transform.localPosition, (Vector2)pawnTwo.transform.localPosition,
+                                             (Vector2)pawnThree.transform.localPosition, (Vector2)pawnFour.transform.localPosition);
 
             Vector2[] positions = new Vector2[12];
 
             for (int i = 0; i < 4; i++)
             {
-                positions[i] = (Vector2)AIPawns[i].transform.position;
-                positions[i + 4] = (Vector2)AIPawns[i + 4].transform.position;
-                positions[i + 8] = (Vector2)AIPawns[i + 8].transform.position;
+                positions[i] = (Vector2)AIPawns[i].transform.localPosition;
+                positions[i + 4] = (Vector2)AIPawns[i + 4].transform.localPosition;
+                positions[i + 8] = (Vector2)AIPawns[i + 8].transform.localPosition;
             }
 
             GameController.instance.SetAIPawns(positions);
@@ -1101,20 +1101,20 @@ public class Gameplay : MonoBehaviour
             switch (pawn)
             {
                 case 0:
-                    pawnOne.transform.position = new Vector3(pawnOne.transform.position.x + 170.0f, pawnOne.transform.position.y - 32.0f, pawnOne.transform.position.z);
-                    GameController.instance.controlledPawns[pawn].OutedPawn(pawnOne.transform.position.x, pawnOne.transform.position.y);
+                    pawnOne.transform.localPosition = new Vector3(-66, -405, pawnOne.transform.localPosition.z);
+                    GameController.instance.controlledPawns[pawn].OutedPawn(pawnOne.transform.localPosition.x, pawnOne.transform.localPosition.y);
                     break;
                 case 1:
-                    pawnTwo.transform.position = new Vector3(pawnTwo.transform.position.x + 290.0f, pawnTwo.transform.position.y - 32.0f, pawnTwo.transform.position.z);
-                    GameController.instance.controlledPawns[1].OutedPawn(pawnTwo.transform.position.x, pawnTwo.transform.position.y);
+                    pawnTwo.transform.localPosition = new Vector3(-66, -405, pawnTwo.transform.localPosition.z);
+                    GameController.instance.controlledPawns[1].OutedPawn(pawnTwo.transform.localPosition.x, pawnTwo.transform.localPosition.y);
                     break;
                 case 2:
-                    pawnThree.transform.position = new Vector3(pawnThree.transform.position.x + 290.0f, pawnThree.transform.position.y - 160f, pawnThree.transform.position.z);
-                    GameController.instance.controlledPawns[2].OutedPawn(pawnThree.transform.position.x, pawnThree.transform.position.y);
+                    pawnThree.transform.localPosition = new Vector3(-66, -405, pawnThree.transform.localPosition.z);
+                    GameController.instance.controlledPawns[2].OutedPawn(pawnThree.transform.localPosition.x, pawnThree.transform.localPosition.y);
                     break;
                 case 3:
-                    pawnFour.transform.position = new Vector3(pawnFour.transform.position.x + 170.0f, pawnFour.transform.position.y - 160f, pawnFour.transform.position.z);
-                    GameController.instance.controlledPawns[3].OutedPawn(pawnFour.transform.position.x, pawnFour.transform.position.y);
+                    pawnFour.transform.localPosition = new Vector3(-66, -405, pawnFour.transform.localPosition.z);
+                    GameController.instance.controlledPawns[3].OutedPawn(pawnFour.transform.localPosition.x, pawnFour.transform.localPosition.y);
                     break;
             }
 
@@ -1143,16 +1143,16 @@ public class Gameplay : MonoBehaviour
             switch (pawn)
             {
                 case 0:
-                    pawnOne.transform.position = new Vector3(pawnOne.transform.position.x + deltaX, pawnOne.transform.position.y + deltaY, pawnOne.transform.position.z);
+                    pawnOne.transform.localPosition = new Vector3(pawnOne.transform.localPosition.x + deltaX, pawnOne.transform.localPosition.y + deltaY, pawnOne.transform.localPosition.z);
                     break;
                 case 1:
-                    pawnTwo.transform.position = new Vector3(pawnTwo.transform.position.x + deltaX, pawnTwo.transform.position.y + deltaY, pawnTwo.transform.position.z);
+                    pawnTwo.transform.localPosition = new Vector3(pawnTwo.transform.localPosition.x + deltaX, pawnTwo.transform.localPosition.y + deltaY, pawnTwo.transform.localPosition.z);
                     break;
                 case 2:
-                    pawnThree.transform.position = new Vector3(pawnThree.transform.position.x + deltaX, pawnThree.transform.position.y + deltaY, pawnThree.transform.position.z);
+                    pawnThree.transform.localPosition = new Vector3(pawnThree.transform.localPosition.x + deltaX, pawnThree.transform.localPosition.y + deltaY, pawnThree.transform.localPosition.z);
                     break;
                 case 3:
-                    pawnFour.transform.position = new Vector3(pawnFour.transform.position.x + deltaX, pawnFour.transform.position.y + deltaY, pawnFour.transform.position.z);
+                    pawnFour.transform.localPosition = new Vector3(pawnFour.transform.localPosition.x + deltaX, pawnFour.transform.localPosition.y + deltaY, pawnFour.transform.localPosition.z);
                     break;
             }
 
