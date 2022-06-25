@@ -20,19 +20,9 @@ public class OptionsMenu : MonoBehaviour
 
     void Start()
     {
-        allSoundsVolumeSlider.value = AudioManager.instance.allVolumeMultiplier; //PlayerPrefs.GetFloat("allSoundsVolume")
-        backgroundVolumeSlider.value = AudioManager.instance.backgroundVolume; //PlayerPrefs.GetFloat("backgroundVolume")
-        effectsVolumeSlider.value = AudioManager.instance.effectsVolume; //PlayerPrefs.GetFloat("effectsVolume")
-
-        //GameController.instance.keyCodes.Add("pawnOne", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("pawnOne", "Alpha1")));
-        //GameController.instance.keyCodes.Add("pawnTwo", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("pawnTwo", "Alpha2")));
-        //GameController.instance.keyCodes.Add("pawnThree", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("pawnThree", "Alpha3")));
-        //GameController.instance.keyCodes.Add("pawnFour", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("pawnFour", "Alpha4")));
-        //GameController.instance.keyCodes.Add("rollDice", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("rollDice", "D")));
-        //GameController.instance.keyCodes.Add("goBack", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("goBack", "Escape")));
-        //GameController.instance.keyCodes.Add("newGame", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("newGame", "Space")));
-        //GameController.instance.keyCodes.Add("optionMenu", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("optionMenu", "O")));
-        //GameController.instance.keyCodes.Add("helpMenu", (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("helpMenu", "H")));
+        allSoundsVolumeSlider.value = AudioManager.instance.allVolumeMultiplier;
+        backgroundVolumeSlider.value = AudioManager.instance.backgroundVolume;
+        effectsVolumeSlider.value = AudioManager.instance.effectsVolume;
 
         pawnOne.text = GameController.instance.keyCodes["pawnOne"].ToString();
         pawnTwo.text = GameController.instance.keyCodes["pawnTwo"].ToString();
@@ -81,10 +71,10 @@ public class OptionsMenu : MonoBehaviour
     {
         if (AudioManager.instance.allVolumeMultiplier != allSoundsVolumeSlider.value)
         {
-            AudioManager.instance.SetAllSoundsVolume(allSoundsVolumeSlider.value);    
-        }
-        AudioManager.instance.SetBackgroundVolume(backgroundVolumeSlider.value);
-        AudioManager.instance.SetEffectsVolume(effectsVolumeSlider.value);
+            AudioManager.instance.SetAllSoundsVolume(allSoundsVolumeSlider.value);
+            AudioManager.instance.SetBackgroundVolume(backgroundVolumeSlider.value);
+            AudioManager.instance.SetEffectsVolume(effectsVolumeSlider.value);
+        }    
     }
 
     public void SetBackgroundVolume()

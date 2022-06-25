@@ -53,8 +53,8 @@ public class Pawn
     {
         Position = new Vector2(Position.x + x, Position.y + y);
         Spot = newSpot;
-        if (SpotIfFromPlayer + addToSpot > 55)
-            SpotIfFromPlayer = addToSpot - (56 - SpotIfFromPlayer);
+        if (SpotIfFromPlayer + addToSpot > 54)
+            SpotIfFromPlayer = SpotIfFromPlayer + addToSpot - 56;
         else
             SpotIfFromPlayer += addToSpot;
     }

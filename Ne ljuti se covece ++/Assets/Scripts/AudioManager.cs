@@ -44,9 +44,9 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
-        allVolumeMultiplier = PlayerPrefs.GetFloat("allSoundsVolume");
-        backgroundVolume = PlayerPrefs.GetFloat("backgroundVolume");
-        effectsVolume = PlayerPrefs.GetFloat("effectsVolume");
+        allVolumeMultiplier = PlayerPrefs.GetFloat("allSoundsVolume", 1.0f);
+        backgroundVolume = PlayerPrefs.GetFloat("backgroundVolume", 1.0f);
+        effectsVolume = PlayerPrefs.GetFloat("effectsVolume", 1.0f);
 
         diceRollAudioSource = AddAudio(diceRollAudioClip, false, false, effectsVolume * allVolumeMultiplier);
         inHouseAudioSource = AddAudio(inHouseAudioClip, false, false, effectsVolume * allVolumeMultiplier);

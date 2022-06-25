@@ -1418,10 +1418,9 @@ MonoBehaviour:
   backgroundAudioClip: {fileID: 8300000, guid: ff7d733f89160ee4981b5ba742555009, type: 3}
   diceRollAudioClip: {fileID: 8300000, guid: 87b07be9aecc46c4d9215bba243e7039, type: 3}
   inHouseAudioClip: {fileID: 8300000, guid: ad128c7d08302144686b18638987526f, type: 3}
-  winAudioClip: {fileID: 8300000, guid: e961fd133b5abbb4cab55e6de68b0676, type: 3}
+  gameoverAudioClip: {fileID: 8300000, guid: e961fd133b5abbb4cab55e6de68b0676, type: 3}
   eatAudioClip: {fileID: 8300000, guid: 7b83f04874c187f4986e9638277f366f, type: 3}
   buttonPressedAudioClip: {fileID: 8300000, guid: c2ad1c1eed320f14c88b1b0e7f594208, type: 3}
-  turnAudioClip: {fileID: 8300000, guid: 87b07be9aecc46c4d9215bba243e7039, type: 3}
 --- !u!4 &2092663476
 Transform:
   m_ObjectHideFlags: 0

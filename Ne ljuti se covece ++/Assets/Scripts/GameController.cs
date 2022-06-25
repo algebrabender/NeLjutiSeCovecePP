@@ -193,7 +193,7 @@ public class GameController : MonoBehaviour
                 p.Color = color;
                 p.Spot = 0;
                 //p.SpotIfFromPlayer = 14 * ((j+4) / 4);
-                p.SpotIfFromPlayer = -1;
+                p.SpotIfFromPlayer = -59;
                 AIPawns.Add(p);
             }
             j+=4;
