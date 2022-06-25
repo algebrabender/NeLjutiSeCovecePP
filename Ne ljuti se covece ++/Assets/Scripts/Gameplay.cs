@@ -176,6 +176,7 @@ public class Gameplay : MonoBehaviour
 
                     pawnNumber = Random.Range(0, 4);
                     rolledNumber = lastRolledValue = Random.Range(1, 7);
+                    prevPawnNums.Clear();
                 }
                 else
                 {
@@ -287,6 +288,7 @@ public class Gameplay : MonoBehaviour
 
                 pawnNumber = Random.Range(0, 4);
                 rolledNumber = lastRolledValue = Random.Range(1, 7);
+                prevPawnNums.Clear();
 
                 yield return new WaitForSeconds(1.5f);
             }
@@ -300,16 +302,25 @@ public class Gameplay : MonoBehaviour
                 if (prevPawnNums.Count < 4)
                 {
                     pawnNumber = Random.Range(0, 4);
-                    while (pawnNumber == prevPawnNumber)
+                    while (pawnNumber == prevPawnNumber || prevPawnNums.Contains(pawnNumber))
+                    {
                         pawnNumber = Random.Range(0, 4);
+                        //if (prevPawnNums.Contains(pawnNumber))
+                        //    pawnNumber = Random.Range(0, 4);
+                    }
                     //rolledNumber = lastRolledValue = Random.Range(1, 7);
                 }
-                if (prevPawnNums.Contains(pawnNumber))
+                else
+                {
                     i++;
+                    prevPawnNums.Clear();
+                }
+                    //if (prevPawnNums.Contains(pawnNumber))
+                    //    i++;
+                }
             }
-        }
 
-        rollDiceButton.enabled = true;
+            rollDiceButton.enabled = true;
     }
 
     private void SetPawnNumbers()
@@ -336,7 +347,7 @@ public class Gameplay : MonoBehaviour
     private void CalculateDeltas(int currentSpot, int rolledValue, out float deltaX, out float deltaY, out int newSpot, int ai = 3)
     {
         deltaX = 66.0f;
-        deltaY = 67.5f;
+        deltaY = 67.0f;
 
         newSpot = currentSpot + rolledValue;
         
